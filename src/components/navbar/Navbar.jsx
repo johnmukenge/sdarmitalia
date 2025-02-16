@@ -1,18 +1,44 @@
-import React from 'react'
-import logo from '../../assets/logo-adsgmdr.jpg';
+import { useState } from "react";
+import { NavLink } from "react-router-dom";
+import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai"; // Icone per menu mobile
 
-export default function Navbar() {
+const Navbar = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
-    <div>
-      <nav className="navbar bg-gray-800 p-4 flex justify-between items-center">
-        <ul className="flex justify-end space-x-4">
-            <li><a href="/" className="text-white hover:text-blue-200">Home</a></li>
-            <li><a className="text-white hover:text-blue-200" href="/eventi">Eventi</a></li>
-            <li><a className="text-white hover:text-blue-200" href="/media">Media</a></li>
-            <li><a className="text-white hover:text-blue-200" href="/letteratura">Letteratura</a></li>
-            <li><a className="text-white hover:text-blue-200"href="/chiese">Chiese</a></li>
+    <nav className="fixed top-0 left-0 w-full bg-gray-800 text-white p-4 z-50">
+      <div className="container mx-auto flex justify-between items-center">
+        
+        {/* Logo */}
+        <h1 className="text-xl font-bold">ADSGMDR</h1>
+
+        {/* Menu desktop */}
+        <ul className="hidden md:flex space-x-4">
+          <li><NavLink to="/" className={({ isActive }) => isActive ? "text-blue-300" : "hover:text-blue-300"}>Home</NavLink></li>
+          <li><NavLink to="/sabbathschool" className={({ isActive }) => isActive ? "text-blue-300" : "hover:text-blue-300"}>Scuola Sabatica</NavLink></li>
+          <li><NavLink to="/news" className={({ isActive }) => isActive ? "text-blue-300" : "hover:text-blue-300"}>News</NavLink></li>
+          <li><NavLink to="/sermons" className={({ isActive }) => isActive ? "text-blue-300" : "hover:text-blue-300"}>Prediche</NavLink></li>
+          <li><NavLink to="/contact" className={({ isActive }) => isActive ? "text-blue-300" : "hover:text-blue-300"}>Contatti</NavLink></li>
         </ul>
-      </nav>
-    </div>
-  )
-}
+
+        {/* Menu mobile */}
+        <button className="md:hidden" onClick={() => setIsOpen(!isOpen)}>
+          {isOpen ? <AiOutlineClose size={24} /> : <AiOutlineMenu size={24} />}
+        </button>
+      </div>
+
+      {/* Dropdown mobile */}
+      {isOpen && (
+        <ul className="md:hidden bg-gray-700 flex flex-col space-y-2 p-4">
+          <li><NavLink to="/" className="block py-2" onClick={() => setIsOpen(false)}>Home</NavLink></li>
+          <li><NavLink to="/sabbathschool" className="block py-2" onClick={() => setIsOpen(false)}>Scuola Sabatica</NavLink></li>
+          <li><NavLink to="/news" className="block py-2" onClick={() => setIsOpen(false)}>News</NavLink></li>
+          <li><NavLink to="/sermons" className="block py-2" onClick={() => setIsOpen(false)}>Prediche</NavLink></li>
+          <li><NavLink to="/contact" className="block py-2" onClick={() => setIsOpen(false)}>Contatti</NavLink></li>
+        </ul>
+      )}
+    </nav>
+  );
+};
+
+export default Navbar;
