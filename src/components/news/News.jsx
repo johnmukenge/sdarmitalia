@@ -1,15 +1,16 @@
+import Navbar from "../navbar/Navbar"
 
-const News = () => {
+function Header() {
   return (
-    <section className="relative h-[500px] bg-cover bg-center" style={{ backgroundImage: "url('/hero.jpg')" }}>
-      <div className="absolute inset-0 bg-black opacity-50"></div>
-      <div className="relative z-10 flex flex-col items-center justify-center h-full text-white text-center p-8">
-        <h1 className="text-4xl font-bold">Avventista Del Settimo Giorno Movimento Di Riforma</h1>
-        <p className="text-lg mt-4">Scopri le nostre attività, studi biblici e prediche.</p>
-        <a href="/biblestudy" className="mt-6 bg-blue-500 px-6 py-3 rounded-lg hover:bg-blue-700 transition">Richiedi uno Studio Biblico</a>
-      </div>
-    </section>
-  );
-};
+    <div>
+      <Navbar />
+      <header className="header bg-cover bg-center h-screen">
+        <div className="flex items-center justify-center h-full">
+          <h1 className="text-white text-4xl">Avventisti del Settimo Giorno Movimento di Riforma</h1>
+        </div>
+      </header>
+    </div>
+  )
+}
 
-export default News;
+export default Header
