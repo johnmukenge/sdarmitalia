@@ -9,6 +9,7 @@ import Sermons from "./components/sermons/Sermons";
 import Event from "./components/events/Event";
 import Donazioni from "./components/donazioni/Donazioni";
 import Body from "./components/body/Body";
+import FindChurches from "./components/churches/FindChurches";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/donazione" element={<Donazioni />} />
           <Route path="/sermons" element={<Sermons />} />
+          <Route path="/trova-chiesa" element={<FindChurches />} />
           <Route path="/richiedi-studi-biblici" element={<BibleStudy />} />
           <Route path="/articoli" element={<Articles />} />
           <Route path="/eventi" element={<Event />} />

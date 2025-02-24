@@ -97,7 +97,7 @@ const Body = () => {
         </div>
         <div>
           <img src={bibleStudyImg} alt="Richiedi uno Studio Biblico" className="w-full rounded-lg" />
-          <Link to="/richiedi-studi-biblici" className="block mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+          <Link to="/contact" className="block mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
             Richiedi uno Studio Biblico
           </Link>
         </div>

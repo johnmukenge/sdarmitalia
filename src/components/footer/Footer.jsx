@@ -10,7 +10,7 @@ const Footer = () => {
             <li><a href="/innario-cristiano" className="text-gray-400 hover:text-white">Innario cristiano</a></li>
             <li><a href="/trova-chiesa" className="text-gray-400 hover:text-white">Trova chiesa</a></li>
             <li><a href="/richiedi-preghiera" className="text-gray-400 hover:text-white">Richiedi preghiera</a></li>
-            <li><a href="/richiedi-studi-biblici" className="text-gray-400 hover:text-white">Richiedi studi biblici</a></li>
+            <li><a href="/contact" className="text-gray-400 hover:text-white">Richiedi studi biblici</a></li>
           </ul>
         </div>
 
@@ -28,7 +28,7 @@ const Footer = () => {
         <div>
           <h3 className="text-lg font-bold">News</h3>
           <ul>
-            <li><a href="/annunci" className="text-gray-400 hover:text-white">Annunci ufficiali</a></li>
+            <li><a href="/news" className="text-gray-400 hover:text-white">Annunci ufficiali</a></li>
             <li><a href="/articoli" className="text-gray-400 hover:text-white">Articoli</a></li>
             <li><a href="/eventi" className="text-gray-400 hover:text-white">Eventi</a></li>
             <li><a href="/donazioni" className="text-gray-400 hover:text-white">Donazioni</a></li>
