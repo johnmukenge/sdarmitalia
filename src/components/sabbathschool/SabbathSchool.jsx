@@ -39,7 +39,7 @@ const SabbathSchool = () => {
           {darkMode ? "Modalità Chiara" : "Modalità Scura"}
         </button>
 
-        <h2 className="text-2xl font-bold mb-4">Studio delle Lezioni della Scuola Sabbatica</h2>
+        <h2 className="text-2xl font-bold mb-4">Studio delle Lezioni della Scuola del Sabato</h2>
 
         {/* Caricamento file PDF */}
         <label className="cursor-pointer flex items-center gap-2 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-all">
