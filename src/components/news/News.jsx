@@ -1,19 +1,37 @@
 import Navbar from "../navbar/Navbar"
+import { useEffect, useState } from "react";
 
 const News = () => {
+
+  const [news, setNews] = useState([]);
+
+  useEffect(() => {
+  fetch("http://localhost:8080/api/v1/news", {
+    method: "GET",
+    credentials: "include",  // 🔥 Importante per autenticazione/sessioni
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then(response => response.json())
+    .then(data => console.log("✅ News data:", data))
+    .catch(error => console.error("❌ Errore nel fetch delle news:", error));
+}, []);
+
   return (
     <div>
       <Navbar />
       <section className="container mx-auto p-8 grid grid-cols-3 gap-8">
         {/* Colonne principali */}
         <div className="col-span-2 grid grid-cols-2 gap-6">
-          {[...Array(9)].map((_, index) => (
-            <div key={index} className="bg-white p-4 shadow rounded">
-              <h2 className="text-xl font-bold">Titolo Notizia {index + 1}</h2>
-              <p className="text-gray-600 mt-2">Breve descrizione della notizia...</p>
-              <a href="#" className="text-blue-500 mt-2 inline-block">Leggi di più</a>
-            </div>
-          ))}
+          {news.map((article) => (
+          <div key={article._id} className="bg-white p-4 shadow rounded">
+            <img src={article.image} alt={article.title} className="w-full h-48 object-cover rounded" />
+            <h2 className="text-xl font-bold mt-2">{article.title}</h2>
+            <p className="text-gray-600 mt-2">{article.subtitle}</p>
+            <a href="#" className="text-blue-500 mt-2 inline-block">Leggi di più</a>
+          </div>
+        ))}
         </div>
         
         {/* Sidebar */}
