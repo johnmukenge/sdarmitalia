@@ -6,25 +6,27 @@ const Contact = () => {
     const formData = new FormData(event.target);
     
     const data = {
-      name: formData.get("name"),
+      nome: formData.get("name"), // match with your backend schema
       email: formData.get("email"),
-      phone: formData.get("phone"),
-      message: formData.get("message"),
+      telefono: formData.get("phone"),
+      messaggio: formData.get("message"),
     };
-    
+
     try {
-      const response = await fetch("/api/send-email", {
+      const response = await fetch("http://localhost:5000/api/v1/contact", { 
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
       });
-      
+
       if (response.ok) {
-        alert("Email inviata con successo!");
+        alert("Contatto salvato con successo!");
+        event.target.reset(); // Reset form after successful submission
       } else {
-        alert("Errore nell'invio della email.");
+        const errorData = await response.json();
+        alert("Errore nel salvataggio: " + errorData.message);
       }
     } catch (error) {
       console.error("Errore:", error);
