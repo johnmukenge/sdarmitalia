@@ -10,6 +10,7 @@ import Event from "./components/events/Event";
 import Donazioni from "./components/donazioni/Donazioni";
 import Body from "./components/body/Body";
 import FindChurches from "./components/churches/FindChurches";
+import Registrazione from "./components/contact/Registrazione";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route index element={<Body />} />
           <Route path="/lezioni-scuola-sabbatica" element={<SabbathSchool />} />
           <Route path="/news" element={<News />} />
+          <Route path="/registration" element={<Registrazione />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/donazione" element={<Donazioni />} />
           <Route path="/sermons" element={<Sermons />} />

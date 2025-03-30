@@ -9,6 +9,7 @@ import sermonImg from "../../assets/sermon.jpg";
 import bibleStudyImg from "../../assets/bible-study.jpg";
 import articleImg from "../../assets/article.jpg";
 import notizie from "../../data/notizie";
+import Lezionario from "../../documents/Lezionario1-2025.pdf";
 
 const Body = () => {
   return (
@@ -75,7 +76,7 @@ const Body = () => {
             come la potenza di Dio può trasformare completamente un “figlio del tuono”
             in un uomo di amorevole disposizione e profonda visione spirituale.
           </p>
-          <a href="/lezionario.pdf" download className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+          <a href={Lezionario} download className="bg-blue-500 text-white px-4 py-1 rounded-lg hover:bg-blue-700">
             Scarica il PDF
           </a>
         </div>
@@ -91,7 +92,7 @@ const Body = () => {
         </div>
         <div>
           <img src={sermonImg} alt="Segui un Sermone" className="w-full rounded-lg" />
-          <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" className="block mt-4 text-blue-600 hover:underline">
+          <a href="https://www.youtube.com/@MovimentoDiRiforma" target="_blank" rel="noopener noreferrer" className="block mt-4 text-blue-600 hover:underline">
             Segui un Sermone
           </a>
         </div>

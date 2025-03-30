@@ -18,6 +18,7 @@ const Navbar = () => {
         <ul className="hidden md:flex space-x-4">
           <li><NavLink to="/" className={({ isActive }) => isActive ? "text-blue-300" : "hover:text-blue-300"}>Home</NavLink></li>
           <li><NavLink to="/news" className={({ isActive }) => isActive ? "text-blue-300" : "hover:text-blue-300"}>News</NavLink></li>
+          <li><NavLink to="/eventi" className={({ isActive }) => isActive ? "text-blue-300" : "hover:text-blue-300"}>Eventi</NavLink></li>
           <li><NavLink to="/lezioni-scuola-sabbatica" className={({ isActive }) => isActive ? "text-blue-300" : "hover:text-blue-300"}>Scuola Sabatica</NavLink></li>
           <li><NavLink to="/sermons" className={({ isActive }) => isActive ? "text-blue-300" : "hover:text-blue-300"}>Prediche</NavLink></li>
           <li><NavLink to="/contact" className={({ isActive }) => isActive ? "text-blue-300" : "hover:text-blue-300"}>Contatti</NavLink></li>

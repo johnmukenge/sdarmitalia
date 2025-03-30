@@ -1,18 +1,23 @@
 
-const Contact = () => {
+const Registrazione = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
     
     const data = {
-      nome: formData.get("name"), // match with your backend schema
-      email: formData.get("email"),
-      telefono: formData.get("phone"),
-      messaggio: formData.get("message"),
+      email: formData.get("email"), // match with your backend schema
+      nome: formData.get("nome"),
+      cognome: formData.get("cognome"),
+      telefono: formData.get("telefono"),
+      dataNascita: formData.get("dataNascita"),
+      luogoNascita: formData.get("luogoNascita"),
+      sesso: formData.get("sesso"),
+      tipoAlloggio: formData.get("tipoAlloggio"),
+      messaggio: formData.get("messaggio"),
     };
 
     try {
-      const response = await fetch("http://localhost:5000/api/v1/contact", { 
+      const response = await fetch("http://localhost:5000/api/v1/registration", { 
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -21,7 +26,7 @@ const Contact = () => {
       });
 
       if (response.ok) {
-        alert("Contatto salvato con successo!");
+        alert("Registrazione salvato con successo!");
         event.target.reset(); // Reset form after successful submission
       } else {
         const errorData = await response.json();
@@ -38,12 +43,29 @@ const Contact = () => {
       <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 p-8 bg-white shadow-lg rounded-lg">
         {/* Colonna del Form */}
         <div>
-          <h2 className="text-2xl font-bold mb-4">Contattaci</h2>
+          <h2 className="text-2xl font-bold mb-4">Registrati</h2>
           <form className="flex flex-col space-y-4" onSubmit={handleSubmit}>
-            <input name="name" type="text" placeholder="Nome" className="p-2 border border-gray-300 rounded" required />
+            <input name="nome" type="text" placeholder="Nome" className="p-2 border border-gray-300 rounded" required />
+            <input name="cognome" type="text" placeholder="Cognome" className="p-2 border border-gray-300 rounded" required />
             <input name="email" type="email" placeholder="Email" className="p-2 border border-gray-300 rounded" required />
-            <input name="phone" type="tel" placeholder="Telefono" className="p-2 border border-gray-300 rounded" required />
-            <textarea name="message" placeholder="Messaggio" className="p-2 border border-gray-300 rounded h-32" required></textarea>
+            <input name="dataNascita" type="date" placeholder="Data di Nascita" className="p-2 border border-gray-300 rounded" required />
+            <input name="luogoNascita" type="text" placeholder="Luogo di Nascita" className="p-2 border border-gray-300 rounded" required />
+            <select name="sesso" className="p-2 border border-gray-300 rounded" required>
+              <option value="">Seleziona Sesso</option>
+              <option value="maschio">Maschio</option>
+              <option value="femmina">Femmina</option>
+            </select>
+            <select name="tipoAlloggio" className="p-2 border border-gray-300 rounded" required>
+              <option value="">Tipo di Alloggio</option>
+              <option value="casa">Casa</option>
+              <option value="appartamento">Appartamento</option>
+              <option value="albergo">Albergo</option>
+              <option value="hotel">Hotel</option>
+              <option value="ostello">Ostello</option>
+              <option value="altro">Altro</option>
+            </select>
+            <input name="telefono" type="tel" placeholder="Telefono" className="p-2 border border-gray-300 rounded" required />
+            <textarea name="messaggio" placeholder="Messaggio" className="p-2 border border-gray-300 rounded h-32" required></textarea>
             <button type="submit" className="bg-blue-500 text-white p-2 rounded hover:bg-blue-600">Invia</button>
           </form>
         </div>
@@ -83,4 +105,4 @@ const Contact = () => {
   );
 };
 
-export default Contact;
+export default Registrazione;
