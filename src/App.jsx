@@ -1,35 +1,38 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Layout from "./components/layout/Layout";
+import Articles from "./components/articles/Articles";
+import BibleStudy from "./components/biblestudy/BibleStudy";
+import Contact from "./components/contact/Contact";
+import News from "./components/news/News";
+import SabbathSchool from "./components/sabbathschool/SabbathSchool";
+import Sermons from "./components/sermons/Sermons";
+import Event from "./components/events/Event";
+import Donazioni from "./components/donazioni/Donazioni";
+import Body from "./components/body/Body";
+import FindChurches from "./components/churches/FindChurches";
+import Registrazione from "./components/contact/Registrazione";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Body />} />
+          <Route path="/lezioni-scuola-sabbatica" element={<SabbathSchool />} />
+          <Route path="/news" element={<News />} />
+          <Route path="/registration" element={<Registrazione />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/donazione" element={<Donazioni />} />
+          <Route path="/sermons" element={<Sermons />} />
+          <Route path="/trova-chiesa" element={<FindChurches />} />
+          <Route path="/richiedi-studi-biblici" element={<BibleStudy />} />
+          <Route path="/articoli" element={<Articles />} />
+          <Route path="/eventi" element={<Event />} />
+          <Route path="/donazioni" element={<Donazioni />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
-export default App
+export default App;
