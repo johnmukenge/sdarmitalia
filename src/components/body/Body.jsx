@@ -4,12 +4,12 @@ import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import sabbathLesson from "../../assets/sabbathLesson.jpg";
+import sabbathLesson from "../../assets/sabbathLesson2.jpg";
 import sermonImg from "../../assets/sermon.jpg";
 import bibleStudyImg from "../../assets/bible-study.jpg";
 import articleImg from "../../assets/article.jpg";
 import notizie from "../../data/notizie";
-import Lezionario from "../../documents/Lezionario1-2025.pdf";
+import Lezionario from "../../documents/Lezionario2-2025.pdf";
 
 const Body = () => {
   return (
@@ -62,19 +62,24 @@ const Body = () => {
         <div className="w-1/2">
           <h2 className="text-3xl font-bold mb-4">Lezioni della Scuola del Sabato</h2>
           <p className="text-gray-700 mb-4">
-            Quest’anno studieremo per tre trimestri Il Vangelo secondo Giovanni. Per
-            modestia, l’autore del quarto vangelo non si identifica, né fa qualche riferimento a lui stesso come uno dei due discepoli che per prima seguirono Gesù (Giovanni 1:37). Egli allude, piuttosto, ad “un altro discepolo”, “quel discepolo”,
-            “il discepolo…che amava,” “il discepolo che Gesù amava,” e “il discepolo che
-            rende testimonianza di queste cose” (Giovanni 18:15; 19:26; 21:20,23,24).
-            Il fatto che altri importanti discepoli sono citati per nome mentre il nome di
-            Giovanni è omesso, sembra indicare che egli deve esser stato l’autore di quel
-            vangelo. <br />
-            Secondo lo Spirito di Profezia l’autore del quarto vangelo fu Giovanni, “il
-            discepolo che Gesù amava.” Egli era uno dei tre discepoli che testimoniarono
-            la gloria di Cristo sul monte della trasfigurazione e la Sua agonia nel giardino
-            poco prima del Suo arresto. La sua vita è un esempio eccezionale che dimostra
-            come la potenza di Dio può trasformare completamente un “figlio del tuono”
-            in un uomo di amorevole disposizione e profonda visione spirituale.
+            Il manoscritto del Vangelo secondo Giovanni è datato più tardi degli altri tre
+            vangeli (chiamati i Vangeli Sinottici), ma risale ancora al primo secolo. Nel diciannovesimo
+            secolo i critici della Bibbia cercarono di smentire il fatto che esso
+            fosse stato scritto prima dell’anno 150 D.C., cercando così di mettere in dubbio
+            il fatto che l’apostolo Giovanni ne fosse l’autore. I critici affermarono anche che
+            esso rifletteva la filosofia Gnostica e perciò non poteva esser stato scritto prima che
+            lo Gnosticismo diventasse una seria minaccia per la fede. (Lo Gnosticismo era un
+            sistema filosofico e religioso di un’antica setta che rivendicava la conoscenza piuttosto
+            che la fede come la chiave per la salvezza.) Una tale veduta distorta è stata
+            rifiutata da tanto tempo. <br />
+            Al contrario, l’evidenza esterna afferma l’esistenza del quarto vangelo e la grande
+            considerazione nella quale esso era tenuto già nell’anno 115 D.C. Una tale
+            evidenza fu acquisita attraverso la scoperta di un piccolo rotolo di papiro, che
+            riportava alcuni versetti di Giovanni (capitolo 16, versetti 31-33, 37,38), conosciuto
+            come il Papiro Rylands e comunemente designato come P52, che fu datato
+            paleograficamente nell’anno 125 D.C. Questo frammento, trovato in Egitto all’inizio
+            del secondo secolo, è considerato un’evidenza tangibile della prima ed ampia
+            diffusione del quarto vangelo.
           </p>
           <a href={Lezionario} download className="bg-blue-500 text-white px-4 py-1 rounded-lg hover:bg-blue-700">
             Scarica il PDF

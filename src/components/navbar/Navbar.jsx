@@ -1,18 +1,19 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai"; // Icone per menu mobile
+import logo from "../../assets/adsgmdr.svg"; // Logo del sito
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="fixed top-0 left-0 w-full bg-gray-800 text-white p-4 z-50">
+    <nav className="fixed top-0 left-0 w-full bg-madison-750 text-white p-4 z-50">
       <div className="container mx-auto flex justify-between items-center">
         
         {/* Logo */}
-        <h1 className="text-xl font-bold">
-          <NavLink to="/" className="hover:text-blue-300">ADSGMDR</NavLink>
-        </h1>
+        <NavLink to="/">
+          <img src={logo} alt="Logo" className="h-20 w-30" />
+        </NavLink>
 
         {/* Menu desktop */}
         <ul className="hidden md:flex space-x-4">
