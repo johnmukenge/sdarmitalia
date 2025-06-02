@@ -1,5 +1,5 @@
 import Milano from "../../assets/milano.jpg";
-import Poppi from "../../assets/poppi.jpg";
+import Poppi from "../../assets/Poppi.jpg";
 import Roma from "../../assets/roma.jpg";
 import Torino from "../../assets/torino.jpg";
 import { useState, useEffect } from "react";
