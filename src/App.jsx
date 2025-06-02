@@ -11,6 +11,8 @@ import Donazioni from "./components/donazioni/Donazioni";
 import Body from "./components/body/Body";
 import FindChurches from "./components/churches/FindChurches";
 import Registrazione from "./components/contact/Registrazione";
+import ChiSiamo from "./components/chisiamo/ChiSiamo";
+import NostraStoria from "./components/chisiamo/NostraStoria";
 
 function App() {
   return (
@@ -19,6 +21,8 @@ function App() {
         <Route path="/" element={<Layout />}>
           <Route index element={<Body />} />
           <Route path="/lezioni-scuola-sabbatica" element={<SabbathSchool />} />
+          <Route path="/chi-siamo" element={<ChiSiamo />} />
+          <Route path="/la-nostra-storia" element={<NostraStoria />} />
           <Route path="/news" element={<News />} />
           <Route path="/registration" element={<Registrazione />} />
           <Route path="/contact" element={<Contact />} />

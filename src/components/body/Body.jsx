@@ -58,8 +58,15 @@ const Body = () => {
 
       {/* 📖 Sezione Scuola Sabatica */}
       <section className="flex flex-col bg-gray-100 md:flex-row items-center space-y-8 md:space-y-0 md:space-x-8">
-        <img src={sabbathLesson} alt="Lezionario Scuola Sabatica" className="w-1/4 rounded-lg" />
-        <div className="w-1/2">
+        {/* Image Section */}
+        <div className="flex-shrink-0 mb-8 md:mb-0">
+          <img
+            src={sabbathLesson}
+            alt="sabbathLesson"
+            className="rounded-lg shadow-lg w-full md:w-96"
+          />
+        </div>
+        <div className="bg-white p-6 rounded-lg shadow-lg max-w-3xl overflow-y-auto h-130">
           <h2 className="text-3xl font-bold mb-4">Lezioni della Scuola del Sabato</h2>
           <p className="text-gray-700 mb-4">
             Il manoscritto del Vangelo secondo Giovanni è datato più tardi degli altri tre
@@ -81,7 +88,7 @@ const Body = () => {
             del secondo secolo, è considerato un’evidenza tangibile della prima ed ampia
             diffusione del quarto vangelo.
           </p>
-          <a href={Lezionario} download className="bg-blue-500 text-white px-4 py-1 rounded-lg hover:bg-blue-700">
+          <a href={Lezionario} download className="bg-blue-950 text-white px-4 py-1 rounded-lg hover:bg-blue-700">
             Scarica il PDF
           </a>
         </div>

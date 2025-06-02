@@ -8,7 +8,7 @@ const Header = () => {
     >
       <div className="absolute inset-0 bg-black opacity-50"></div>
       <div className="relative z-15 flex flex-col items-center justify-center h-full text-white text-center py-32">
-        <h1 className="text-4xl font-bold text-center">Avventista Del Settimo Giorno</h1>
+        <h1 className="text-4xl font-bold text-center">Avventisti Del Settimo Giorno</h1>
         <h1 className="text-4xl font-bold text-center">Movimento Di Riforma</h1>
         {/*<p className="text-lg mt-4">Scopri le nostre attività, studi biblici e prediche.</p> */}
         <a

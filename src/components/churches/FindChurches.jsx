@@ -1,6 +1,25 @@
-import articleImg from "../../assets/article.jpg";
+import { useState, useEffect } from "react";
+import articleImg1 from "../../assets/sdarm-beliefs-baptism.jpg";
+import articleImg2 from "../../assets/sdarm-beliefs-bible.jpg";
+import articleImg3 from "../../assets/sdarm-beliefs-carpenter.jpg";
 
 const FindChurches = () => {
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const images = [articleImg1, articleImg2, articleImg3];
+
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % images.length);
+  };
+
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + images.length) % images.length);
+  };
+
+  useEffect(() => {
+    const interval = setInterval(nextSlide, 3000); // Slide every 3 seconds
+    return () => clearInterval(interval); // Cleanup on component unmount
+  }, []);
+
   return (
     <section className="p-8 bg-gray-100 flex flex-col items-center">
       {/* Sezione superiore con due colonne */}
@@ -9,8 +28,24 @@ const FindChurches = () => {
           <h2 className="text-2xl font-bold">Vieni a trovarci in una delle nostre chiese</h2>
           <p className="mt-4">Scopri le sedi delle nostre chiese in diverse città e vieni a trovarci.</p>
         </div>
-        <div>
-          <img src={articleImg} alt="Chiesa" className="w-full h-auto rounded-lg shadow" />
+        <div className="relative">
+          <img
+            src={images[currentSlide]}
+            alt={`Slide ${currentSlide + 1}`}
+            className="w-full h-auto rounded-lg shadow"
+          />
+          <button
+            onClick={prevSlide}
+            className="absolute top-1/2 left-2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full"
+          >
+            &#8249;
+          </button>
+          <button
+            onClick={nextSlide}
+            className="absolute top-1/2 right-2 transform -translate-y-1/2 bg-gray-800 text-white p-2 rounded-full"
+          >
+            &#8250;
+          </button>
         </div>
       </div>
       

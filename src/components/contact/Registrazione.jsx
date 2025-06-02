@@ -1,5 +1,34 @@
 
 const Registrazione = () => {
+
+  const onSearch = async (event) => {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    const nome = formData.get("nome");
+
+    try {
+      const response = await fetch(`http://localhost:5000/api/v1/registration/${nome}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        if (data.success) {
+          alert("Membro trovato: " + JSON.stringify(data.data)); // Display member data
+        } else {
+          alert("Membro non trovato.");
+        }
+      }
+    } catch (error) {
+      console.error("Errore:", error);
+      alert("Si è verificato un errore durante la ricerca del membro.");
+      
+    }
+
+  }
   const handleSubmit = async (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
@@ -44,6 +73,13 @@ const Registrazione = () => {
         {/* Colonna del Form */}
         <div>
           <h2 className="text-2xl font-bold mb-4">Registrati</h2>
+          {/* Ricerca membro */}
+          <form className="flex flex-col space-y-4" onSubmit={onSearch}>
+            <input name="nome" type="text" placeholder="Nome" className="p-2 border border-gray-300 rounded" required />
+            <button type="submit" className="bg-blue-500 text-white p-2 rounded hover:bg-blue-600">Cerca</button>
+          </form>
+
+          {/* Ricerca membro */}
           <form className="flex flex-col space-y-4" onSubmit={handleSubmit}>
             <input name="nome" type="text" placeholder="Nome" className="p-2 border border-gray-300 rounded" required />
             <input name="cognome" type="text" placeholder="Cognome" className="p-2 border border-gray-300 rounded" required />

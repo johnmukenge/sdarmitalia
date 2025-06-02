@@ -5,7 +5,7 @@ import Header from "../header/Header";
 
 const Layout = () => {
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen top-0 left-0">
       <Navbar /> {/* Navbar fissa */}
       <main className="flex-grow"> {/* Contenuto dinamico */}
         <Header /> {/* Contenuto dinamico */}

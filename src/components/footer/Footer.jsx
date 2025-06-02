@@ -39,9 +39,9 @@ const Footer = () => {
         <div>
           <h3 className="text-lg font-bold">Chi siamo</h3>
           <ul>
-            <li><a href="/la-nostra-fede" className="text-gray-400 hover:text-white">La nostra fede</a></li>
+            <li><a href="/la-nostra-storia" className="text-gray-400 hover:text-white">La nostra storia</a></li>
             <li><a href="/cos-e-il-movimento-di-riforma" className="text-gray-400 hover:text-white">Cos&apos; è il movimento di riforma</a></li>
-            <li><a href="/domande-frequenti" className="text-gray-400 hover:text-white">Domande frequenti</a></li>
+            {/*<li><a href="/domande-frequenti" className="text-gray-400 hover:text-white">Domande frequenti</a></li>*/}
             <li><a href="/contact" className="text-gray-400 hover:text-white">Contattaci</a></li>
           </ul>
         </div>
