@@ -6,10 +6,11 @@ import Milano from "../../assets/milano.jpg";
 import Poppi from "../../assets/Poppi.jpg";
 import Roma from "../../assets/Roma.jpg";
 import Torino from "../../assets/Torino.jpg";
+import Trieste from "../../assets/Trieste.jpg";
 
 const FindChurches = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const images = [Milano, Poppi, Roma, Torino];
+  const images = [Milano, Poppi, Roma, Torino, Trieste];
 
   const nextSlide = () => {
     setCurrentSlide((prev) => (prev + 1) % images.length);

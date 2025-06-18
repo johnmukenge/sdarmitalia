@@ -1,5 +1,6 @@
 import brevestoria from "../../assets/brevestoria.jpg";
 import fedeCristiana from "../../data/fedeCristiana.js";
+import FedeFondamentale from "../../data/FedeFondamentale.pdf";
 
 const NostraStoria = () => {
   return (
@@ -86,7 +87,7 @@ const NostraStoria = () => {
       {/* PDF Download Section */}
       <div className="flex justify-center items-center mb-8">
         <a
-          href="/path/to/beliefs.pdf"
+          href={FedeFondamentale}
           download
           className="flex items-center space-x-4 bg-blue-950 text-white px-6 py-3 rounded-lg shadow hover:bg-blue-700"
         >
