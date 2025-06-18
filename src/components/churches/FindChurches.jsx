@@ -3,7 +3,7 @@ import articleImg1 from "../../assets/sdarm-beliefs-baptism.jpg";
 import articleImg2 from "../../assets/sdarm-beliefs-bible.jpg";
 import articleImg3 from "../../assets/sdarm-beliefs-carpenter.jpg";
 import Milano from "../../assets/milano.jpg";
-import Poppi from "../../assets/poppi.jpg";
+import Poppi from "../../assets/Poppi.jpg";
 import Roma from "../../assets/roma.jpg";
 import Torino from "../../assets/torino.jpg";
 
