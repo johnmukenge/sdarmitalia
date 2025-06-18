@@ -4,8 +4,8 @@ import articleImg2 from "../../assets/sdarm-beliefs-bible.jpg";
 import articleImg3 from "../../assets/sdarm-beliefs-carpenter.jpg";
 import Milano from "../../assets/milano.jpg";
 import Poppi from "../../assets/Poppi.jpg";
-import Roma from "../../assets/roma.jpg";
-import Torino from "../../assets/torino.jpg";
+import Roma from "../../assets/Roma.jpg";
+import Torino from "../../assets/Torino.jpg";
 
 const FindChurches = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
