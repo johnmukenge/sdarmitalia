@@ -2,10 +2,14 @@ import { useState, useEffect } from "react";
 import articleImg1 from "../../assets/sdarm-beliefs-baptism.jpg";
 import articleImg2 from "../../assets/sdarm-beliefs-bible.jpg";
 import articleImg3 from "../../assets/sdarm-beliefs-carpenter.jpg";
+import Milano from "../../assets/milano.jpg";
+import Poppi from "../../assets/poppi.jpg";
+import Roma from "../../assets/roma.jpg";
+import Torino from "../../assets/torino.jpg";
 
 const FindChurches = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const images = [articleImg1, articleImg2, articleImg3];
+  const images = [Milano, Poppi, Roma, Torino];
 
   const nextSlide = () => {
     setCurrentSlide((prev) => (prev + 1) % images.length);

@@ -104,7 +104,7 @@ const Body = () => {
         </div>
         <div>
           <img src={sermonImg} alt="Segui un Sermone" className="w-full rounded-lg" />
-          <a href="https://www.youtube.com/@MovimentoDiRiforma" target="_blank" rel="noopener noreferrer" className="block mt-4 text-blue-600 hover:underline">
+          <a href="https://www.youtube.com/@adsgmdr" target="_blank" rel="noopener noreferrer" className="block mt-4 text-blue-600 hover:underline">
             Segui un Sermone
           </a>
         </div>
