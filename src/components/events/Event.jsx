@@ -1,7 +1,7 @@
 import Milano from "../../assets/milano.jpg";
 import Poppi from "../../assets/Poppi.jpg";
-import Roma from "../../assets/roma.jpg";
-import Torino from "../../assets/torino.jpg";
+import Roma from "../../assets/Roma.jpg";
+import Torino from "../../assets/Torino.jpg";
 import { useState, useEffect } from "react";
 
 // Example event data, each with images and description
