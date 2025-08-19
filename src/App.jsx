@@ -13,6 +13,7 @@ import FindChurches from "./components/churches/FindChurches";
 import Registrazione from "./components/contact/Registrazione";
 import ChiSiamo from "./components/chisiamo/ChiSiamo";
 import NostraStoria from "./components/chisiamo/NostraStoria";
+import NewsDetails from "./components/news/NewsDetails";
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
           <Route path="/articoli" element={<Articles />} />
           <Route path="/eventi" element={<Event />} />
           <Route path="/donazioni" element={<Donazioni />} />
+          <Route path="/news/:id" element={<NewsDetails />} />
         </Route>
       </Routes>
     </BrowserRouter>
