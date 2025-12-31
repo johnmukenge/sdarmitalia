@@ -1,9 +1,8 @@
-
 const Contact = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
-    
+
     const data = {
       nome: formData.get("name"), // match with your backend schema
       email: formData.get("email"),
@@ -12,7 +11,7 @@ const Contact = () => {
     };
 
     try {
-      const response = await fetch("http://localhost:5000/api/v1/contact", { 
+      const response = await fetch("http://localhost:5000/api/v1/contact", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -40,14 +39,42 @@ const Contact = () => {
         <div>
           <h2 className="text-2xl font-bold mb-4">Contattaci</h2>
           <form className="flex flex-col space-y-4" onSubmit={handleSubmit}>
-            <input name="name" type="text" placeholder="Nome" className="p-2 border border-gray-300 rounded" required />
-            <input name="email" type="email" placeholder="Email" className="p-2 border border-gray-300 rounded" required />
-            <input name="phone" type="tel" placeholder="Telefono" className="p-2 border border-gray-300 rounded" required />
-            <textarea name="message" placeholder="Messaggio" className="p-2 border border-gray-300 rounded h-32" required></textarea>
-            <button type="submit" className="bg-blue-500 text-white p-2 rounded hover:bg-blue-600">Invia</button>
+            <input
+              name="name"
+              type="text"
+              placeholder="Nome"
+              className="p-2 border border-gray-300 rounded"
+              required
+            />
+            <input
+              name="email"
+              type="email"
+              placeholder="Email"
+              className="p-2 border border-gray-300 rounded"
+              required
+            />
+            <input
+              name="phone"
+              type="tel"
+              placeholder="Telefono"
+              className="p-2 border border-gray-300 rounded"
+              required
+            />
+            <textarea
+              name="message"
+              placeholder="Messaggio"
+              className="p-2 border border-gray-300 rounded h-32"
+              required
+            ></textarea>
+            <button
+              type="submit"
+              className="bg-blue-950 text-white p-2 rounded hover:bg-blue-800"
+            >
+              Invia
+            </button>
           </form>
         </div>
-        
+
         {/* Colonna delle Informazioni */}
         <div>
           <h2 className="text-2xl font-bold mb-4">Le nostre sedi</h2>

@@ -48,7 +48,7 @@ const Footer = () => {
       </div>
       {/* Copyright Section */}
       <div className="mt-8 border-t pt-4 text-center text-sm text-gray-400">
-        <p>Copyright © 2025 Avventista Del Settimo Giorno Movimento Di Riforma - Campo Italiano. Tutti i diritti riservati.</p>
+        <p>Copyright © 2025 Avventisti Del Settimo Giorno Movimento Di Riforma - Campo Italiano. Tutti i diritti riservati.</p>
       </div>
     </footer>
   );

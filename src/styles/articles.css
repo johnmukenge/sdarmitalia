@@ -1,0 +1,469 @@
+/**
+ * CUSTOM CSS STYLES - ARTICOLI (OPZIONALE)
+ * 
+ * Se vuoi aggiungere animazioni o stili più sofisticati,
+ * puoi aggiungere questi al tuo file CSS globale o crearne uno specifico.
+ * 
+ * Includi questo file come:
+ * import './styles/articles.css' in Articles.jsx
+ */
+
+/* ============================================
+   ANIMAZIONI
+   ============================================ */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* ============================================
+   CLASSI UTILITY
+   ============================================ */
+
+.article-card {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.article-card:nth-child(1) {
+  animation-delay: 0.05s;
+}
+
+.article-card:nth-child(2) {
+  animation-delay: 0.1s;
+}
+
+.article-card:nth-child(3) {
+  animation-delay: 0.15s;
+}
+
+.article-card:nth-child(n + 4) {
+  animation-delay: calc(0.15s + (var(--index, 0) * 0.05s));
+}
+
+/* Effetto hover card */
+.article-card-hover {
+  transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.article-card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 25px -5px rgba(37, 99, 235, 0.15);
+}
+
+/* ============================================
+   COMPONENTI SPECIFICI
+   ============================================ */
+
+/* Filter Section */
+.filter-section {
+  animation: slideInLeft 0.6s ease-in-out;
+  background: linear-gradient(135deg, #f0f9ff 0%, #ffffff 100%);
+}
+
+/* Search Input */
+.search-input {
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.search-input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+/* Select Inputs */
+.filter-select {
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.filter-select:hover {
+  border-color: #2563eb;
+}
+
+.filter-select:focus {
+  border-color: #2563eb;
+  ring: 2px;
+  ring-color: rgba(37, 99, 235, 0.1);
+}
+
+/* Article Image */
+.article-image-container {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #dbeafe 0%, #e0f2fe 100%);
+}
+
+.article-image-container img {
+  transition: transform 0.3s ease;
+}
+
+.article-image-container:hover img {
+  transform: scale(1.05);
+}
+
+/* Article Badge */
+.article-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  color: white;
+  padding: 6px 12px;
+  border-radius: 9999px;
+  font-size: 12px;
+  font-weight: 600;
+  box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.3);
+  animation: slideInRight 0.5s ease-in-out;
+}
+
+/* Action Buttons */
+.btn-read {
+  transition: all 0.2s ease;
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-read::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.2);
+  transition: left 0.3s ease;
+}
+
+.btn-read:hover {
+  box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.3);
+  transform: translateY(-1px);
+}
+
+.btn-read:hover::before {
+  left: 100%;
+}
+
+.btn-download {
+  transition: all 0.2s ease;
+  border: 2px solid #e5e7eb;
+}
+
+.btn-download:hover {
+  background-color: #f3f4f6;
+  border-color: #2563eb;
+  color: #2563eb;
+}
+
+/* ============================================
+   ARTICLE DETAIL PAGE
+   ============================================ */
+
+/* Hero Section */
+.hero-section {
+  position: relative;
+  height: 384px;
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  animation: fadeIn 0.8s ease-in-out;
+}
+
+.hero-section::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, rgba(37, 99, 235, 0.8), transparent);
+}
+
+.hero-section img {
+  animation: zoom 8s ease-in-out infinite;
+  opacity: 0.4;
+}
+
+@keyframes zoom {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+/* Back Button */
+.btn-back {
+  transition: all 0.2s ease;
+  color: #2563eb;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+}
+
+.btn-back:hover {
+  color: #1d4ed8;
+  transform: translateX(-2px);
+}
+
+/* Article Header */
+.article-header {
+  animation: slideInLeft 0.6s ease-in-out;
+  border-bottom: 2px solid #e5e7eb;
+  padding-bottom: 24px;
+  margin-bottom: 24px;
+}
+
+.article-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  color: #6b7280;
+}
+
+.article-meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.article-meta-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #9ca3af;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.article-meta-value {
+  font-weight: 600;
+  color: #1f2937;
+}
+
+/* Article Content */
+.article-content {
+  line-height: 1.8;
+  color: #374151;
+}
+
+.article-content p {
+  margin-bottom: 16px;
+}
+
+.article-content p:first-letter {
+  font-weight: 600;
+}
+
+/* Sidebar */
+.article-sidebar {
+  animation: slideInRight 0.6s ease-in-out;
+  position: sticky;
+  top: 96px;
+}
+
+.sidebar-section {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+  padding: 32px;
+  margin-bottom: 24px;
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.sidebar-section:hover {
+  border-color: #2563eb;
+  box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.1);
+}
+
+.related-article-link {
+  display: block;
+  padding: 16px;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.related-article-link:hover {
+  border-color: #2563eb;
+  background-color: #f0f9ff;
+  box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.1);
+}
+
+.related-article-link-title {
+  color: #1f2937;
+  font-weight: 600;
+  font-size: 14px;
+  transition: color 0.2s ease;
+}
+
+.related-article-link:hover .related-article-link-title {
+  color: #2563eb;
+}
+
+/* Info Box */
+.info-box {
+  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+  border: 2px solid #bfdbfe;
+  border-radius: 8px;
+  padding: 24px;
+  animation: pulse 3s ease-in-out infinite;
+}
+
+.info-box h4 {
+  color: #1e40af;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+.info-box p {
+  color: #1e3a8a;
+  font-size: 14px;
+}
+
+.info-box a {
+  color: #2563eb;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.info-box a:hover {
+  color: #1d4ed8;
+  text-decoration: underline;
+}
+
+/* ============================================
+   LOADING & ERROR STATES
+   ============================================ */
+
+.loading-spinner {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 3px solid #e5e7eb;
+  border-radius: 50%;
+  border-top-color: #2563eb;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.error-message {
+  background-color: #fee2e2;
+  border: 1px solid #fecaca;
+  color: #b91c1c;
+  padding: 16px;
+  border-radius: 8px;
+  animation: slideInLeft 0.3s ease-in-out;
+}
+
+.no-results {
+  text-align: center;
+  padding: 48px 16px;
+  color: #6b7280;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+/* ============================================
+   RESPONSIVE ADJUSTMENTS
+   ============================================ */
+
+@media (max-width: 1024px) {
+  .article-sidebar {
+    position: relative;
+    top: auto;
+  }
+}
+
+@media (max-width: 640px) {
+  .article-image-container {
+    height: 200px;
+  }
+
+  .article-header {
+    padding-bottom: 16px;
+  }
+
+  .article-meta {
+    gap: 12px;
+    font-size: 14px;
+  }
+
+  .sidebar-section {
+    padding: 16px;
+  }
+
+  .hero-section {
+    height: 240px;
+  }
+}
+
+/* ============================================
+   PRINT STYLES (per stampa PDF)
+   ============================================ */
+
+@media print {
+  .navbar,
+  .article-sidebar,
+  .btn-back,
+  .footer {
+    display: none;
+  }
+
+  .article-content {
+    color: #000;
+  }
+
+  .article-header {
+    border-color: #000;
+  }
+
+  body {
+    background: white;
+    color: black;
+  }
+}
