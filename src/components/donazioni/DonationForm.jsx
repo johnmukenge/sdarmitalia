@@ -245,7 +245,7 @@ const DonationForm = ({ amount, onSuccess, onCancel }) => {
           <button
             type="submit"
             disabled={isProcessing || !stripe}
-            className="flex-1 px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors duration-200 flex items-center justify-center gap-2"
+            className="flex-1 px-6 py-3 bg-blue-950 text-white font-semibold rounded-lg hover:bg-blue-900 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors duration-200 flex items-center justify-center gap-2"
           >
             {isProcessing ? (
               <>

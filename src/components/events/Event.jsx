@@ -216,7 +216,7 @@ const Event = () => {
           </p>
           <a
             href="/contact"
-            className="inline-flex items-center gap-2 bg-blue-950 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl"
+            className="inline-flex items-center gap-2 bg-blue-950 hover:bg-blue-900 text-white font-bold py-3 px-8 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl"
           >
             Contattaci
             <ChevronRight size={20} />

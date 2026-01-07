@@ -63,7 +63,7 @@ const ArticleDetail = () => {
             </h2>
             <button
               onClick={() => navigate("/articoli")}
-              className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-lg"
+              className="bg-blue-950 hover:bg-blue-900 text-white font-semibold py-2 px-6 rounded-lg"
             >
               Torna agli articoli
             </button>

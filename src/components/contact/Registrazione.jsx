@@ -1,18 +1,19 @@
-
 const Registrazione = () => {
-
   const onSearch = async (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
     const nome = formData.get("nome");
 
     try {
-      const response = await fetch(`http://localhost:5000/api/v1/registration/${nome}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await fetch(
+        `http://localhost:5000/api/v1/registration/${nome}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       if (response.ok) {
         const data = await response.json();
@@ -25,14 +26,12 @@ const Registrazione = () => {
     } catch (error) {
       console.error("Errore:", error);
       alert("Si è verificato un errore durante la ricerca del membro.");
-      
     }
-
-  }
+  };
   const handleSubmit = async (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
-    
+
     const data = {
       email: formData.get("email"), // match with your backend schema
       nome: formData.get("nome"),
@@ -46,13 +45,16 @@ const Registrazione = () => {
     };
 
     try {
-      const response = await fetch("http://localhost:5000/api/v1/registration", { 
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
+      const response = await fetch(
+        "http://localhost:5000/api/v1/registration",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        }
+      );
 
       if (response.ok) {
         alert("Registrazione salvato con successo!");
@@ -75,23 +77,72 @@ const Registrazione = () => {
           <h2 className="text-2xl font-bold mb-4">Registrati</h2>
           {/* Ricerca membro */}
           <form className="flex flex-col space-y-4" onSubmit={onSearch}>
-            <input name="nome" type="text" placeholder="Nome" className="p-2 border border-gray-300 rounded" required />
-            <button type="submit" className="bg-blue-500 text-white p-2 rounded hover:bg-blue-600">Cerca</button>
+            <input
+              name="nome"
+              type="text"
+              placeholder="Nome"
+              className="p-2 border border-gray-300 rounded"
+              required
+            />
+            <button
+              type="submit"
+              className="bg-blue-950 text-white p-2 rounded hover:bg-blue-900"
+            >
+              Cerca
+            </button>
           </form>
 
           {/* Ricerca membro */}
           <form className="flex flex-col space-y-4" onSubmit={handleSubmit}>
-            <input name="nome" type="text" placeholder="Nome" className="p-2 border border-gray-300 rounded" required />
-            <input name="cognome" type="text" placeholder="Cognome" className="p-2 border border-gray-300 rounded" required />
-            <input name="email" type="email" placeholder="Email" className="p-2 border border-gray-300 rounded" required />
-            <input name="dataNascita" type="date" placeholder="Data di Nascita" className="p-2 border border-gray-300 rounded" required />
-            <input name="luogoNascita" type="text" placeholder="Luogo di Nascita" className="p-2 border border-gray-300 rounded" required />
-            <select name="sesso" className="p-2 border border-gray-300 rounded" required>
+            <input
+              name="nome"
+              type="text"
+              placeholder="Nome"
+              className="p-2 border border-gray-300 rounded"
+              required
+            />
+            <input
+              name="cognome"
+              type="text"
+              placeholder="Cognome"
+              className="p-2 border border-gray-300 rounded"
+              required
+            />
+            <input
+              name="email"
+              type="email"
+              placeholder="Email"
+              className="p-2 border border-gray-300 rounded"
+              required
+            />
+            <input
+              name="dataNascita"
+              type="date"
+              placeholder="Data di Nascita"
+              className="p-2 border border-gray-300 rounded"
+              required
+            />
+            <input
+              name="luogoNascita"
+              type="text"
+              placeholder="Luogo di Nascita"
+              className="p-2 border border-gray-300 rounded"
+              required
+            />
+            <select
+              name="sesso"
+              className="p-2 border border-gray-300 rounded"
+              required
+            >
               <option value="">Seleziona Sesso</option>
               <option value="maschio">Maschio</option>
               <option value="femmina">Femmina</option>
             </select>
-            <select name="tipoAlloggio" className="p-2 border border-gray-300 rounded" required>
+            <select
+              name="tipoAlloggio"
+              className="p-2 border border-gray-300 rounded"
+              required
+            >
               <option value="">Tipo di Alloggio</option>
               <option value="casa">Casa</option>
               <option value="appartamento">Appartamento</option>
@@ -100,12 +151,28 @@ const Registrazione = () => {
               <option value="ostello">Ostello</option>
               <option value="altro">Altro</option>
             </select>
-            <input name="telefono" type="tel" placeholder="Telefono" className="p-2 border border-gray-300 rounded" required />
-            <textarea name="messaggio" placeholder="Messaggio" className="p-2 border border-gray-300 rounded h-32" required></textarea>
-            <button type="submit" className="bg-blue-500 text-white p-2 rounded hover:bg-blue-600">Invia</button>
+            <input
+              name="telefono"
+              type="tel"
+              placeholder="Telefono"
+              className="p-2 border border-gray-300 rounded"
+              required
+            />
+            <textarea
+              name="messaggio"
+              placeholder="Messaggio"
+              className="p-2 border border-gray-300 rounded h-32"
+              required
+            ></textarea>
+            <button
+              type="submit"
+              className="bg-blue-950 text-white p-2 rounded hover:bg-blue-900"
+            >
+              Invia
+            </button>
           </form>
         </div>
-        
+
         {/* Colonna delle Informazioni */}
         <div>
           <h2 className="text-2xl font-bold mb-4">Le nostre sedi</h2>

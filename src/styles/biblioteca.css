@@ -1,0 +1,153 @@
+/* Biblioteca Digitale - Custom Styles */
+
+/* Animazioni smooth per i filtri */
+.filter-panel {
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Hover effect per le card dei libri */
+.libro-card {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.libro-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+/* Effetto loading per il TTS */
+.tts-speaking {
+  animation: pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* Scroll smooth nei lettori */
+.libro-content {
+  scroll-behavior: smooth;
+  transition: all 0.3s ease;
+}
+
+/* Progress bar animation */
+.progress-fill {
+  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Dark mode smooth transition */
+.dark-mode-toggle {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Responsive text sizing per la lettura */
+.reading-text {
+  line-height: 1.8;
+  letter-spacing: 0.3px;
+  word-spacing: 0.2em;
+}
+
+/* Box shadow per categoria badges */
+.category-badge {
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.15);
+}
+
+/* Star rating animation */
+.star-rating {
+  transition: transform 0.2s ease;
+}
+
+.star-rating:hover {
+  transform: scale(1.1);
+}
+
+/* Smooth fade per i risultati di ricerca */
+.search-results {
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Stile per il dropdown download */
+.download-dropdown:hover {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Icone con smooth rotation */
+.icon-rotate {
+  transition: transform 0.3s ease;
+}
+
+.icon-rotate.active {
+  transform: rotate(180deg);
+}
+
+/* Media query per mobile optimization */
+@media (max-width: 768px) {
+  .libro-card {
+    transition: all 0.2s ease;
+  }
+
+  .libro-card:active {
+    transform: scale(0.98);
+  }
+
+  .reading-text {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+}
+
+/* Accessibilità - Focus visible */
+button:focus-visible,
+a:focus-visible,
+select:focus-visible,
+input:focus-visible {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
+}
+
+/* Print styles per stampa libri */
+@media print {
+  .navbar,
+  .footer,
+  .controls,
+  .sidebar {
+    display: none;
+  }
+
+  .libro-content {
+    color: black;
+    background: white;
+    font-size: 12pt;
+  }
+
+  .page-break {
+    page-break-after: always;
+  }
+}

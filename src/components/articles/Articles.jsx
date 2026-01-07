@@ -210,7 +210,7 @@ const Articles = () => {
                 </p>
                 <button
                   onClick={resetFilters}
-                  className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-lg transition-colors"
+                  className="bg-blue-950 hover:bg-blue-900 text-white font-semibold py-2 px-6 rounded-lg transition-colors"
                 >
                   Azzera filtri
                 </button>

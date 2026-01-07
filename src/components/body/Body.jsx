@@ -1,13 +1,13 @@
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight, Calendar } from "lucide-react";
-import sabbathLesson from "../../assets/sabbathLesson3.jpg";
+import sabbathLesson from "../../assets/sabbathLesson12026.png";
 import sermonImg from "../../assets/sermon.jpg";
 import bibleStudyImg from "../../assets/bible-study.jpg";
 //import articleImg from "../../assets/article.jpg";
 import notizie from "../../data/notizie";
 import articoli from "../../data/articoli";
-import Lezionario from "../../documents/Lezionario-3-2025.pdf";
+import Lezionario from "../../documents/Lezionario-1-2026.pdf";
 
 const Body = () => {
   // State per lo slider delle notizie
@@ -237,26 +237,30 @@ const Body = () => {
             Lezioni della Scuola del Sabato
           </h2>
           <p className="text-gray-700 mb-4">
-            Continuando con le Lezioni dal Vangelo secondo Giovanni, iniziamo ad
-            avvicinarci agli ultimi giorni del ministero di Gesù sulla terra. Lo
-            Spirito di Profezia ci dice che per noi sarebbe bene dedicare un ora
-            al giorno alla meditazione e alla contemplazione della vita di
-            Cristo. Dovremmo esaminarne ogni particolare, immaginando tutte le
-            scene, soprattutto quelle finali. E, mentre ci soffermeremo così sul
-            grande sacrificio compiuto da Gesù per noi, la nostra fiducia
-            diverrà più stabile, il nostro amore più forte e il Suo Spirito
-            penetrerà maggiormente in noi. Se vogliamo la salvezza, dobbiamo
-            imparare la lezione del pentimento e dell umiliazione ai piedi della
-            croce. – The Desire of Ages, p. 83. <br />L apostolo parla di Gesù
-            Cristo come il vero Logos, l espressione incarnata della sapienza
-            divina, la volontà divina e la potenza divina, attraverso la quale
-            la via della salvezza è stata aperta e rivelata a tutti gli uomini.
-            Gesù viene riferito come il Creatore di tutte le cose, la fonte
-            della vita, la luce del mondo, la manifestazione vivente della mente
-            del Padre. La volontà di Dio che tutti vengano a ravvedimento (2
-            Pietro 3:9), attraverso l opera dello Spirito Santo, viene
-            evidenziata anche da Giovanni, che poi ci porta nel Getsemani, dove
-            il destino della razza umana è stato deciso.
+            Benché li chiamiamo i “profeti minori”, il loro messaggio non è
+            affatto insignificante! Il nome deriva semplicemente dal fatto che i
+            libri da loro scritti sono brevi. Eppure questi messaggi pieni di
+            potenza sono forti, diretti e altamente rilevanti per i nostri
+            giorni. Per questo motivo gli studenti della Scuola del Sabato in
+            tutto il mondo si concentreranno, per i prossimi tre mesi, sui Punti
+            salienti dai Profeti Minori come un investimento tempestivo nella
+            nostra preparazione per la chiusura del tempo di grazia e il ritorno
+            di Cristo. I profeti minori non portano messaggi dolci e facili.
+            Nient’affatto: essi tagliano come un’ascia posta alla radice
+            dell’albero. “Dio non manda messaggeri per adulare il peccatore.
+            Egli non consegna alcun messaggio di pace per cullare i non
+            santificati in una sicurezza fatale. Egli pone pesanti fardelli
+            sulla coscienza di chi fa il male e trafigge l’anima con frecce di
+            convinzione”. (The Desire of Ages, p. 104). “Dio è sempre stato
+            fedele nel punire il male. Egli mandò i Suoi profeti per avvertire i
+            colpevoli, denunciare i loro peccati e pronunciare giudizio su di
+            loro. Coloro che si chiedono perché la parola di Dio metta così
+            chiaramente in evidenza i peccati del Suo popolo, affinché i
+            beffardi li scherniscano e i santi ne soffrano, dovrebbero
+            considerare che tutto ciò è stato scritto per la loro istruzione,
+            affinché possano evitare i mali registrati e imitare soltanto la
+            giustizia di coloro che servirono il Signore”. (Testimonies for the
+            Church, vol. 4, p. 12).
           </p>
 
           <a
@@ -281,7 +285,7 @@ const Body = () => {
           </div>
           <Link
             to="/trova-chiesa"
-            className="block mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+            className="block mt-4 bg-blue-950 text-white px-4 py-2 rounded-lg hover:bg-blue-900 transition-colors"
           >
             Trova una Chiesa
           </Link>
@@ -299,7 +303,7 @@ const Body = () => {
             href="https://www.youtube.com/@adsgmdr"
             target="_blank"
             rel="noopener noreferrer"
-            className="block mt-4 bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors"
+            className="block mt-4 bg-blue-950 text-white px-4 py-2 rounded-lg hover:bg-blue-900 transition-colors"
           >
             Segui un Sermone
           </a>
@@ -314,7 +318,7 @@ const Body = () => {
           </div>
           <Link
             to="/contact"
-            className="block mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+            className="block mt-4 bg-blue-950 text-white px-4 py-2 rounded-lg hover:bg-blue-900 transition-colors"
           >
             Richiedi uno Studio Biblico
           </Link>

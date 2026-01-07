@@ -31,7 +31,7 @@ const NewsDetails = () => {
             </h2>
             <button
               onClick={() => navigate("/news")}
-              className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-lg transition-colors"
+              className="inline-flex items-center gap-2 bg-blue-950 hover:bg-blue-900 text-white font-semibold py-2 px-6 rounded-lg transition-colors"
             >
               Torna alle notizie
             </button>
@@ -158,7 +158,7 @@ const NewsDetails = () => {
             <div className="mt-12 pt-8 border-t border-gray-200">
               <button
                 onClick={() => navigate("/news")}
-                className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold py-3 px-8 rounded-lg transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl"
+                className="inline-flex items-center gap-2 bg-blue-950 hover:bg-blue-900 text-white font-bold py-3 px-8 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl"
               >
                 <ArrowLeft size={20} />
                 Torna alle notizie

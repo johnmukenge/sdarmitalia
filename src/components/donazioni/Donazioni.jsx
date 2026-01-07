@@ -114,7 +114,7 @@ const Donazioni = () => {
                   <button
                     onClick={handleCustomAmount}
                     disabled={!customAmount || parseFloat(customAmount) <= 0}
-                    className="px-6 py-3 bg-blue-950 text-white font-semibold rounded-lg hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors duration-200"
+                    className="px-6 py-3 bg-blue-950 text-white font-semibold rounded-lg hover:bg-blue-900 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors duration-200"
                   >
                     Continua
                   </button>

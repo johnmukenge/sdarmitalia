@@ -1,34 +1,26 @@
-import Navbar from "../navbar/Navbar";
-//import axios from "axios";
 import { useEffect, useState } from "react";
-import NewsData from "../../data/news";
+import { ChevronDown, Search, Filter, Calendar, Eye } from "lucide-react";
+import apiClient from "../../services/apiClient";
 import {
-  Instagram,
-  Facebook,
-  MessageCircle,
-  Twitter,
-  ChevronDown,
-  Download,
-} from "lucide-react";
+  ErrorDisplay,
+  LoadingSpinner,
+  EmptyState,
+} from "../common/ErrorBoundary";
 
 /**
  * News Component - Pagina Notizie
  *
- * Componente per la visualizzazione delle notizie con:
- * - Caricamento progressivo (infinite scroll / load more)
- * - Supporto per immagini e video YouTube
- * - Pulsanti di condivisione social
- * - Layout professionale e responsive
- * - Dati da API backend o mock data
+ * Componente per la visualizzazione delle notizie integrato con API backend
  *
  * Features:
- * - Carica 5 notizie inizialmente
- * - Pulsante "Carica altri" per aggiungere più contenuti
- * - Layout a 3 colonne (immagine + testo)
- * - Supporto YouTube embed
- * - Social share buttons
- * - Loading state durante il caricamento
- * - Design professionale con colori app (blu, bianco, nero)
+ * - Caricamento da API backend
+ * - Filtri per categoria
+ * - Ricerca per titolo/descrizione
+ * - Ordinamento (recente, visualizzazioni)
+ * - Statistiche in tempo reale
+ * - Loading e error states
+ */
+/* - Design professionale con colori app (blu, bianco, nero)
  *
  * State:
  * @state {Array} news - Tutte le notizie dal backend/mock
@@ -39,49 +31,26 @@ import {
  */
 const News = () => {
   const [news, setNews] = useState([]);
-  const [displayedNews, setDisplayedNews] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [displayCount, setDisplayCount] = useState(5);
-  const [hasMore, setHasMore] = useState(true);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [filteredNews, setFilteredNews] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [sortBy, setSortBy] = useState("recente");
+  const [showFilters, setShowFilters] = useState(false);
 
-  /**
-   * Carica tutte le notizie dal backend o dai dati mock
-   */
+  // Carica notizie dall'API
   useEffect(() => {
     const fetchNews = async () => {
-      setLoading(true);
       try {
-        // TODO: Sostituire con chiamata API al backend quando disponibile
-        // const response = await axios.get("http://localhost:5000/api/v1/news");
-        // if (response.status === 200 && Array.isArray(response.data.data.news)) {
-        //   const processedData = response.data.data.news.map((notizia, idx) => ({
-        //     ...notizia,
-        //     sno: idx + 1
-        //   }));
-        //   setNews(processedData);
-        // }
-
-        // Per ora usa i dati mock
-        if (Array.isArray(NewsData)) {
-          const processedData = NewsData.map((notizia, idx) => ({
-            _id: notizia._id,
-            sno: idx + 1,
-            title: notizia.title,
-            subtitle: notizia.subtitle || "",
-            content: notizia.content,
-            image: notizia.image,
-            author: notizia.author,
-            publishedAt: notizia.publishedAt,
-            youtubeId: notizia.youtubeId,
-            motto: notizia.motto,
-            verse: notizia.verse,
-            periodo: notizia.periodo,
-            luogo: notizia.luogo,
-          }));
-          setNews(processedData);
-        }
-      } catch (error) {
-        console.error("Errore nel caricamento notizie:", error);
+        setLoading(true);
+        const data = await apiClient.getNews({ limit: 50 });
+        setNews(data.data?.news || data.news || []);
+        setError(null);
+      } catch (err) {
+        console.error("Errore nel caricamento delle notizie:", err);
+        setError(err.message);
+        setNews([]);
       } finally {
         setLoading(false);
       }
@@ -90,287 +59,266 @@ const News = () => {
     fetchNews();
   }, []);
 
-  /**
-   * Aggiorna le notizie visualizzate quando displayCount cambia
-   */
+  // Estrai categorie uniche
+  const categories = [
+    ...new Set(news.filter((n) => n.category).map((n) => n.category)),
+  ].sort();
+
+  // Filtra e ordina
   useEffect(() => {
-    if (news.length > 0) {
-      const displayed = news.slice(0, displayCount);
-      setDisplayedNews(displayed);
-      setHasMore(displayCount < news.length);
-    }
-  }, [displayCount, news]);
+    let filtered = news.filter((item) => {
+      const matchSearch =
+        !searchTerm ||
+        item.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        item.description?.toLowerCase().includes(searchTerm.toLowerCase());
 
-  /**
-   * Carica altre 5 notizie
-   */
-  const handleLoadMore = () => {
-    setDisplayCount((prev) => prev + 5);
-  };
+      const matchCategory =
+        !selectedCategory || item.category === selectedCategory;
 
-  /**
-   * Formatta la data di pubblicazione
-   */
-  const formatDate = (dateString) => {
-    try {
-      const date = new Date(dateString.data || dateString);
-      return date.toLocaleDateString("it-IT", {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-      });
-    } catch {
-      return "Data non disponibile";
-    }
-  };
+      return matchSearch && matchCategory;
+    });
+
+    // Ordinamento
+    filtered.sort((a, b) => {
+      switch (sortBy) {
+        case "recente":
+          return (
+            new Date(b.createdAt || b.publishedAt) -
+            new Date(a.createdAt || a.publishedAt)
+          );
+        case "anziana":
+          return (
+            new Date(a.createdAt || a.publishedAt) -
+            new Date(b.createdAt || b.publishedAt)
+          );
+        case "visualizzazioni":
+          return (b.views || 0) - (a.views || 0);
+        default:
+          return 0;
+      }
+    });
+
+    setFilteredNews(filtered);
+  }, [news, searchTerm, selectedCategory, sortBy]);
+
+  const hasActiveFilters = searchTerm || selectedCategory;
 
   return (
-    <div className="bg-gradient-to-b from-blue-50 to-white min-h-screen">
-      <Navbar />
+    <div className="bg-gradient-to-b from-blue-50 to-white min-h-screen py-12 px-4 md:px-8">
+      <div className="max-w-6xl mx-auto">
+        <div className="mb-12">
+          <h1 className="text-5xl font-bold text-gray-800 mb-4">
+            📰 Ultime Notizie
+          </h1>
+          <p className="text-xl text-gray-600">
+            Rimani aggiornato sulle novità della comunità SDA Italia
+          </p>
+        </div>
 
-      {/* Header */}
-      <div className="container mx-auto text-center">
-        <h1 className="text-3xl md:text-4xl font-bold mb-4">Notizie</h1>
-        <p className="text-xl md:text-2xl text-black">
-          Resta aggiornato sugli ultimi eventi e attività della comunità
-        </p>
-      </div>
+        {/* Errore */}
+        {error && (
+          <ErrorDisplay
+            error={error}
+            onRetry={() => window.location.reload()}
+            customMessage="Impossibile caricare le notizie. Assicurati che il server sia avviato."
+          />
+        )}
 
-      {/* News Container */}
-      <section className="container mx-auto py-12 px-4">
-        {loading && displayedNews.length === 0 ? (
-          <div className="flex items-center justify-center py-20">
-            <div className="text-center">
-              <div className="inline-block animate-spin mb-4">
-                <div className="w-12 h-12 border-4 border-blue-200 border-t-blue-600 rounded-full"></div>
-              </div>
-              <p className="text-gray-600 text-lg">Caricamento notizie...</p>
-            </div>
-          </div>
-        ) : displayedNews.length === 0 ? (
-          <div className="text-center py-20">
-            <p className="text-gray-600 text-lg">
-              Nessuna notizia disponibile al momento.
-            </p>
-          </div>
-        ) : (
+        {/* Loading */}
+        {loading && <LoadingSpinner message="Caricamento notizie..." />}
+
+        {/* Contenuto Principale */}
+        {!loading && !error && (
           <>
-            <div className="space-y-8">
-              {displayedNews.map((notizia) => (
-                <article
-                  key={notizia._id}
-                  className="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden"
+            {/* Barra di Ricerca */}
+            <div className="mb-8 bg-white rounded-xl shadow-lg p-6">
+              <div className="flex items-center gap-3 mb-6">
+                <Search className="text-blue-600" size={28} />
+                <input
+                  type="text"
+                  placeholder="Cerca per titolo o descrizione..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="flex-1 px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-blue-600 focus:outline-none"
+                />
+              </div>
+
+              {/* Filtri */}
+              <div className="flex flex-wrap items-center gap-3 justify-between">
+                <button
+                  onClick={() => setShowFilters(!showFilters)}
+                  className="flex items-center gap-2 px-4 py-2 bg-blue-950 text-white rounded-lg font-semibold hover:bg-blue-900 transition"
                 >
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-0">
-                    {/* Colonna 1: Media (Immagine/Video) */}
-                    <div className="md:col-span-1 bg-gray-100 h-80 md:h-auto overflow-hidden flex items-center justify-center group">
-                      {notizia.youtubeId ? (
-                        <div className="w-full aspect-video">
-                          <iframe
-                            className="w-full h-full"
-                            src={`https://www.youtube.com/embed/${notizia.youtubeId}`}
-                            title={notizia.title}
-                            frameBorder="0"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                            allowFullScreen
-                          ></iframe>
-                        </div>
-                      ) : notizia.image ? (
+                  <Filter size={18} />
+                  Filtri
+                  {hasActiveFilters && " (1)"}
+                  <ChevronDown size={18} />
+                </button>
+
+                <select
+                  value={sortBy}
+                  onChange={(e) => setSortBy(e.target.value)}
+                  className="px-4 py-2 border-2 border-gray-300 rounded-lg focus:border-blue-600 focus:outline-none font-semibold"
+                >
+                  <option value="recente">Più Recente</option>
+                  <option value="anziana">Meno Recente</option>
+                  <option value="visualizzazioni">Più Visualizzazioni</option>
+                </select>
+              </div>
+
+              {/* Filtro Categoria */}
+              {showFilters && categories.length > 0 && (
+                <div className="mt-6 pt-6 border-t-2 border-gray-300">
+                  <h4 className="font-semibold text-gray-800 mb-4">
+                    Categoria
+                  </h4>
+                  <div className="flex flex-wrap gap-3">
+                    <label className="flex items-center gap-2 cursor-pointer">
+                      <input
+                        type="radio"
+                        name="category"
+                        value=""
+                        checked={!selectedCategory}
+                        onChange={(e) => setSelectedCategory(e.target.value)}
+                        className="w-4 h-4"
+                      />
+                      <span className="text-gray-700">
+                        Tutte ({news.length})
+                      </span>
+                    </label>
+                    {categories.map((cat) => (
+                      <label
+                        key={cat}
+                        className="flex items-center gap-2 cursor-pointer"
+                      >
+                        <input
+                          type="radio"
+                          name="category"
+                          value={cat}
+                          checked={selectedCategory === cat}
+                          onChange={(e) => setSelectedCategory(e.target.value)}
+                          className="w-4 h-4"
+                        />
+                        <span className="text-gray-700">
+                          {cat} ({news.filter((n) => n.category === cat).length}
+                          )
+                        </span>
+                      </label>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Statistiche */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+              <div className="bg-white rounded-lg shadow p-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-gray-600 text-sm">Totale Notizie</p>
+                    <p className="text-3xl font-bold text-blue-600">
+                      {news.length}
+                    </p>
+                  </div>
+                  <Calendar className="text-blue-600" size={32} />
+                </div>
+              </div>
+
+              <div className="bg-white rounded-lg shadow p-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-gray-600 text-sm">Categorie</p>
+                    <p className="text-3xl font-bold text-green-600">
+                      {categories.length}
+                    </p>
+                  </div>
+                  <Filter className="text-green-600" size={32} />
+                </div>
+              </div>
+
+              <div className="bg-white rounded-lg shadow p-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-gray-600 text-sm">Visualizzazioni</p>
+                    <p className="text-3xl font-bold text-orange-600">
+                      {news.reduce((sum, n) => sum + (n.views || 0), 0)}
+                    </p>
+                  </div>
+                  <Eye className="text-orange-600" size={32} />
+                </div>
+              </div>
+            </div>
+
+            {/* Griglia Notizie */}
+            {filteredNews.length > 0 ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {filteredNews.map((item) => (
+                  <div
+                    key={item._id}
+                    className="bg-white rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden"
+                  >
+                    {/* Immagine */}
+                    <div className="h-48 bg-gray-100 overflow-hidden flex items-center justify-center group">
+                      {item.image ? (
                         <img
-                          src={notizia.image}
-                          alt={notizia.title}
-                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                          src={item.image}
+                          alt={item.title}
+                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                         />
                       ) : (
-                        <div className="w-full h-full bg-gradient-to-br from-blue-100 to-blue-50 flex items-center justify-center">
-                          <span className="text-gray-400 text-center px-4">
-                            Nessuna immagine disponibile
-                          </span>
-                        </div>
+                        <div className="w-full h-full bg-gradient-to-br from-blue-100 to-blue-50" />
                       )}
                     </div>
 
-                    {/* Colonna 2-3: Contenuto */}
-                    <div className="md:col-span-2 p-8 md:p-10 flex flex-col">
-                      {/* Header con date e categoria */}
-                      <div className="mb-4">
-                        <div className="inline-block bg-gradient-to-r from-blue-600 to-blue-700 text-white px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wider mb-3">
-                          Notizia
-                        </div>
-                        <p className="text-sm text-gray-500">
-                          📅 {formatDate(notizia.publishedAt)}
-                        </p>
+                    {/* Contenuto */}
+                    <div className="p-4">
+                      <div className="flex items-center gap-2 mb-2">
+                        <span className="text-xs font-bold bg-blue-100 text-blue-700 px-3 py-1 rounded-full">
+                          {item.category || "Notizia"}
+                        </span>
                       </div>
 
-                      {/* Titolo */}
-                      <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-3 line-clamp-2 hover:text-blue-600 transition-colors duration-300">
-                        {notizia.title}
-                      </h2>
+                      <h3 className="text-lg font-bold text-gray-800 mb-2 line-clamp-2">
+                        {item.title}
+                      </h3>
 
-                      {/* Sottotitolo opzionale */}
-                      {notizia.subtitle && (
-                        <p className="text-lg text-gray-600 mb-4 italic">
-                          {notizia.subtitle}
-                        </p>
-                      )}
-
-                      {/* Metadati opzionali */}
-                      <div className="space-y-1 mb-4 text-gray-600">
-                        {notizia.motto && (
-                          <p className="font-semibold">💭 {notizia.motto}</p>
-                        )}
-                        {notizia.verse && (
-                          <p className="text-sm">📖 {notizia.verse}</p>
-                        )}
-                        {notizia.periodo && (
-                          <p className="text-sm">⏰ {notizia.periodo}</p>
-                        )}
-                        {notizia.luogo && (
-                          <p className="text-sm">📍 {notizia.luogo}</p>
-                        )}
-                      </div>
-
-                      {/* Contenuto principale */}
-                      <p className="text-gray-700 mb-6 flex-grow leading-relaxed line-clamp-3">
-                        {notizia.content}
+                      <p className="text-sm text-gray-600 mb-4 line-clamp-3">
+                        {item.description || item.content}
                       </p>
 
-                      {/* Autore */}
-                      {notizia.author && (
-                        <p className="text-gray-600 font-semibold mb-6 pb-6 border-b border-gray-200">
-                          👤{" "}
-                          <span className="text-blue-600">
-                            {notizia.author}
-                          </span>
-                        </p>
-                      )}
-
-                      {/* Leggi di più Button 
-                      <div className="mb-6">
-                        <a
-                          href={`/news/${notizia._id}`}
-                          className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold py-3 px-6 rounded-lg transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl"
-                        >
-                          Leggi di più
-                          <ChevronDown size={18} className="rotate-[-90deg]" />
-                        </a>
-                      </div>*/}
-
-                      {/* Download Invito - Italiano e Inglese */}
-                      <div className="mb-8 pb-8 border-b border-gray-200">
-                        <h4 className="text-sm font-bold text-gray-600 uppercase tracking-wider mb-4">
-                          Scarica l invito
-                        </h4>
-                        <div className="flex flex-wrap gap-3">
-                          <a
-                            href="#"
-                            className="inline-flex items-center gap-2 bg-blue-100 hover:bg-blue-200 text-blue-700 font-semibold py-2 px-4 rounded-lg transition-colors duration-200"
-                            title="Scarica invito in italiano"
-                          >
-                            <Download size={16} />
-                            Italiano
-                          </a>
-                          <a
-                            href="#"
-                            className="inline-flex items-center gap-2 bg-blue-100 hover:bg-blue-200 text-blue-700 font-semibold py-2 px-4 rounded-lg transition-colors duration-200"
-                            title="Scarica invito in inglese"
-                          >
-                            <Download size={16} />
-                            English
-                          </a>
-                        </div>
-                      </div>
-
-                      {/* Social Share Buttons */}
-                      <div className="flex items-center gap-4">
-                        <span className="text-gray-600 font-semibold text-sm">
-                          Condividi:
+                      <div className="flex items-center justify-between text-sm text-gray-500 pt-4 border-t border-gray-200">
+                        <span>
+                          📅{" "}
+                          {new Date(
+                            item.createdAt || item.publishedAt
+                          ).toLocaleDateString("it-IT")}
                         </span>
-
-                        {/* Instagram */}
-                        <a
-                          href={`https://www.instagram.com/?url=${encodeURIComponent(
-                            window.location.origin
-                          )}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-r from-pink-500 to-rose-500 text-white hover:shadow-lg transition-all duration-200 transform hover:scale-110"
-                          title="Condividi su Instagram"
-                        >
-                          <Instagram size={18} />
-                        </a>
-
-                        {/* Facebook */}
-                        <a
-                          href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
-                            window.location.origin
-                          )}&quote=${encodeURIComponent(notizia.title)}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-blue-600 text-white hover:shadow-lg transition-all duration-200 transform hover:scale-110"
-                          title="Condividi su Facebook"
-                        >
-                          <Facebook size={18} />
-                        </a>
-
-                        {/* WhatsApp */}
-                        <a
-                          href={`https://wa.me/?text=${encodeURIComponent(
-                            `${notizia.title} - ${notizia.content} ${window.location.origin}`
-                          )}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-green-500 text-white hover:shadow-lg transition-all duration-200 transform hover:scale-110"
-                          title="Condividi su WhatsApp"
-                        >
-                          <MessageCircle size={18} />
-                        </a>
-
-                        {/* Twitter/X */}
-                        <a
-                          href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(
-                            notizia.title
-                          )}&url=${encodeURIComponent(window.location.origin)}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-sky-500 text-white hover:shadow-lg transition-all duration-200 transform hover:scale-110"
-                          title="Condividi su Twitter"
-                        >
-                          <Twitter size={18} />
-                        </a>
+                        <span>👁️ {item.views || 0}</span>
                       </div>
                     </div>
                   </div>
-                </article>
-              ))}
-            </div>
-
-            {/* Load More Button */}
-            {hasMore && (
-              <div className="mt-12 flex justify-center">
-                <button
-                  onClick={handleLoadMore}
-                  disabled={loading}
-                  className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold py-4 px-10 rounded-lg transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  <span>Carica altri articoli</span>
-                  <ChevronDown size={20} />
-                </button>
+                ))}
               </div>
-            )}
-
-            {/* Fine risultati */}
-            {!hasMore && displayedNews.length > 5 && (
-              <div className="mt-12 text-center">
-                <p className="text-gray-600 text-lg">
-                  ✅ Hai visualizzato tutti i {displayedNews.length} articoli
-                  disponibili
-                </p>
-              </div>
+            ) : (
+              <EmptyState
+                title="Nessuna notizia trovata"
+                message="Prova a modificare i filtri di ricerca"
+                actionButton={
+                  <button
+                    onClick={() => {
+                      setSearchTerm("");
+                      setSelectedCategory("");
+                    }}
+                    className="px-6 py-2 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition"
+                  >
+                    Resetta Filtri
+                  </button>
+                }
+              />
             )}
           </>
         )}
-      </section>
+      </div>
     </div>
   );
 };

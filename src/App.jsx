@@ -18,6 +18,9 @@ import Registrazione from "./components/contact/Registrazione";
 import ChiSiamo from "./components/chisiamo/ChiSiamo";
 import NostraStoria from "./components/chisiamo/NostraStoria";
 import NewsDetails from "./components/news/NewsDetails";
+import NewCampus from "./components/newcampus/NewCampus";
+import Biblioteca from "./components/biblioteca/Biblioteca";
+import LettoreLibro from "./components/biblioteca/LettoreLibro";
 
 // Carica Stripe
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
@@ -42,10 +45,13 @@ function App() {
             <Route path="/sermons" element={<Sermons />} />
             <Route path="/trova-chiesa" element={<FindChurches />} />
             <Route path="/richiedi-studi-biblici" element={<BibleStudy />} />
+            <Route path="/nuova-sede" element={<NewCampus />} />
             <Route path="/articoli" element={<Articles />} />
             <Route path="/articoli/:id" element={<ArticleDetail />} />
             <Route path="/eventi" element={<Event />} />
             <Route path="/eventi/:id" element={<EventDetail />} />
+            <Route path="/biblioteca" element={<Biblioteca />} />
+            <Route path="/biblioteca/:id" element={<LettoreLibro />} />
             <Route path="/donazioni" element={<Donazioni />} />
             <Route path="/news/:id" element={<NewsDetails />} />
           </Route>
