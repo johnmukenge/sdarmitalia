@@ -17,6 +17,9 @@ const DonationForm = ({ amount, onSuccess, onCancel }) => {
     email: "",
     name: "",
     country: "IT",
+    anonimo: false,
+    categoria: "generale",
+    ricevuta: false,
   });
 
   const handleInputChange = (e) => {
@@ -40,25 +43,42 @@ const DonationForm = ({ amount, onSuccess, onCancel }) => {
 
     try {
       // Crea il payment intent sul backend
-      const response = await fetch("/api/create-payment-intent", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          amount: Math.round(amount * 100), // Converti in centesimi
-          email: formData.email,
-          name: formData.name,
-        }),
-      });
+      const response = await fetch(
+        "http://localhost:5000/api/donazioni/create-payment-intent",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            importo: amount, // Mantieni in euro, il backend converte in centesimi
+            email: formData.email.toLowerCase(),
+            nome: formData.name.trim(),
+            anonimo: formData.anonimo || false,
+            categoria: formData.categoria || "generale",
+            ricevuta: formData.ricevuta || false,
+          }),
+        }
+      );
 
-      const { clientSecret } = await response.json();
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(
+          errorData.message || "Errore nella creazione del pagamento"
+        );
+      }
+
+      const data = await response.json();
+      const { clientSecret, paymentIntentId, beneficiary } = data;
 
       if (!clientSecret) {
         throw new Error("Errore nella creazione del pagamento");
       }
 
-      // Conferma il pagamento
+      // Mostra info beneficiario (maskerato)
+      console.log(`Donazione a: ${beneficiary.name} - ${beneficiary.iban}`);
+
+      // Conferma il pagamento con Stripe
       const { error: stripeError, paymentIntent } =
         await stripe.confirmCardPayment(clientSecret, {
           payment_method: {
@@ -71,9 +91,28 @@ const DonationForm = ({ amount, onSuccess, onCancel }) => {
         });
 
       if (stripeError) {
+        // Payment failed - backend webhook will mark as failed
         setError(stripeError.message);
       } else if (paymentIntent.status === "succeeded") {
-        onSuccess();
+        // Confirm with backend
+        const confirmResponse = await fetch(
+          "http://localhost:5000/api/donazioni/confirm-payment",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              paymentIntentId: paymentIntent.id,
+            }),
+          }
+        );
+
+        if (confirmResponse.ok) {
+          onSuccess();
+        } else {
+          throw new Error("Errore nella conferma del pagamento");
+        }
       } else {
         setError("Pagamento non completato. Riprova.");
       }

@@ -259,6 +259,83 @@ class APIClient {
   async createDonazione(data) {
     return this.post("/donazioni", data);
   }
+
+  // ===== FASI PROGETTO (PROJECT PHASES) =====
+  /**
+   * Recupera statistiche complessive del progetto
+   * @async
+   * @returns {Promise<Object>} Statistiche: totalProgress, completedPhases, inProgressPhases, etc.
+   */
+  async getProjectStats() {
+    return this.get("/project-phases/stats");
+  }
+
+  /**
+   * Recupera tutte le fasi del progetto con progresso totale
+   * @async
+   * @param {Object} params - Parametri di filtro (page, limit, sort)
+   */
+  async getProjectPhases(params = {}) {
+    return this.get("/project-phases", params);
+  }
+
+  /**
+   * Recupera una fase del progetto per numero (1-4)
+   * @async
+   * @param {number} phaseNumber - Numero della fase (1-4)
+   */
+  async getPhaseByNumber(phaseNumber) {
+    return this.get(`/project-phases/number/${phaseNumber}`);
+  }
+
+  /**
+   * Recupera i media (gallery) di una fase del progetto
+   * @async
+   * @param {number} phaseNumber - Numero della fase (1-4)
+   */
+  async getPhaseMedia(phaseNumber) {
+    return this.get(`/project-phases/number/${phaseNumber}/media`);
+  }
+
+  /**
+   * Recupera i milestone di una fase del progetto
+   * @async
+   * @param {number} phaseNumber - Numero della fase (1-4)
+   */
+  async getPhaseMilestones(phaseNumber) {
+    return this.get(`/project-phases/number/${phaseNumber}/milestones`);
+  }
+
+  /**
+   * Aggiorna il progresso percentuale di una fase
+   * @async
+   * @param {number} phaseNumber - Numero della fase (1-4)
+   * @param {number} percentage - Percentuale (0-100)
+   */
+  async updatePhaseProgress(phaseNumber, percentage) {
+    return this.patch(`/project-phases/number/${phaseNumber}/progress`, {
+      percentage,
+    });
+  }
+
+  /**
+   * Aggiunge un media a una fase del progetto
+   * @async
+   * @param {number} phaseNumber - Numero della fase (1-4)
+   * @param {Object} mediaData - Dati del media (type, url, title, description)
+   */
+  async addPhaseMedia(phaseNumber, mediaData) {
+    return this.post(`/project-phases/number/${phaseNumber}/media`, mediaData);
+  }
+
+  /**
+   * Recupera una fase del progetto per ID MongoDB
+   * @async
+   * @param {string} id - ID MongoDB della fase
+   */
+  async getPhaseById(id) {
+    return this.get(`/project-phases/${id}`);
+  }
 }
 
 // Esporta un'istanza singleton
