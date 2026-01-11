@@ -120,8 +120,9 @@
 /*
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { API_BASE_URL } from '../config/apiConfig';
 
-const API_BASE_URL = 'http://localhost:5000/api/v1';
+// API_BASE_URL viene automaticamente da Vite in base all'ambiente
 
 export const useArticles = (filters = {}) => {
   const [articles, setArticles] = useState([]);

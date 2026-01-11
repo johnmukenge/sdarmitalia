@@ -7,6 +7,7 @@ import {
   CardCvcElement,
 } from "@stripe/react-stripe-js";
 import { Loader, AlertCircle } from "lucide-react";
+import { API_ENDPOINTS } from "../../config/apiConfig";
 
 const DonationForm = ({ amount, onSuccess, onCancel }) => {
   const stripe = useStripe();
@@ -43,23 +44,20 @@ const DonationForm = ({ amount, onSuccess, onCancel }) => {
 
     try {
       // Crea il payment intent sul backend
-      const response = await fetch(
-        "http://localhost:5000/api/donazioni/create-payment-intent",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            importo: amount, // Mantieni in euro, il backend converte in centesimi
-            email: formData.email.toLowerCase(),
-            nome: formData.name.trim(),
-            anonimo: formData.anonimo || false,
-            categoria: formData.categoria || "generale",
-            ricevuta: formData.ricevuta || false,
-          }),
-        }
-      );
+      const response = await fetch(API_ENDPOINTS.DONATIONS_CREATE_INTENT, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          importo: amount, // Mantieni in euro, il backend converte in centesimi
+          email: formData.email.toLowerCase(),
+          nome: formData.name.trim(),
+          anonimo: formData.anonimo || false,
+          categoria: formData.categoria || "generale",
+          ricevuta: formData.ricevuta || false,
+        }),
+      });
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -95,18 +93,15 @@ const DonationForm = ({ amount, onSuccess, onCancel }) => {
         setError(stripeError.message);
       } else if (paymentIntent.status === "succeeded") {
         // Confirm with backend
-        const confirmResponse = await fetch(
-          "http://localhost:5000/api/donazioni/confirm-payment",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              paymentIntentId: paymentIntent.id,
-            }),
-          }
-        );
+        const confirmResponse = await fetch(API_ENDPOINTS.DONATIONS_CONFIRM, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            paymentIntentId: paymentIntent.id,
+          }),
+        });
 
         if (confirmResponse.ok) {
           onSuccess();
