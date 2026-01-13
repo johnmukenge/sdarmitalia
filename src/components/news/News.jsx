@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { ChevronDown, Search, Filter, Calendar, Eye } from "lucide-react";
 import apiClient from "../../services/apiClient";
+import NewsCard from "./NewsCard";
 import {
   ErrorDisplay,
   LoadingSpinner,
@@ -30,6 +32,7 @@ import {
  * @state {boolean} hasMore - Se ci sono più notizie da caricare
  */
 const News = () => {
+  const navigate = useNavigate();
   const [news, setNews] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -253,50 +256,11 @@ const News = () => {
             {filteredNews.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {filteredNews.map((item) => (
-                  <div
-                    key={item._id}
-                    className="bg-white rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden"
-                  >
-                    {/* Immagine */}
-                    <div className="h-48 bg-gray-100 overflow-hidden flex items-center justify-center group">
-                      {item.image ? (
-                        <img
-                          src={item.image}
-                          alt={item.title}
-                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-                        />
-                      ) : (
-                        <div className="w-full h-full bg-gradient-to-br from-blue-100 to-blue-50" />
-                      )}
-                    </div>
-
-                    {/* Contenuto */}
-                    <div className="p-4">
-                      <div className="flex items-center gap-2 mb-2">
-                        <span className="text-xs font-bold bg-blue-100 text-blue-700 px-3 py-1 rounded-full">
-                          {item.category || "Notizia"}
-                        </span>
-                      </div>
-
-                      <h3 className="text-lg font-bold text-gray-800 mb-2 line-clamp-2">
-                        {item.title}
-                      </h3>
-
-                      <p className="text-sm text-gray-600 mb-4 line-clamp-3">
-                        {item.description || item.content}
-                      </p>
-
-                      <div className="flex items-center justify-between text-sm text-gray-500 pt-4 border-t border-gray-200">
-                        <span>
-                          📅{" "}
-                          {new Date(
-                            item.createdAt || item.publishedAt
-                          ).toLocaleDateString("it-IT")}
-                        </span>
-                        <span>👁️ {item.views || 0}</span>
-                      </div>
-                    </div>
-                  </div>
+                  <NewsCard
+                    key={item._id || item.id}
+                    newsItem={item}
+                    onClick={(id) => navigate(`/news/${id}`)}
+                  />
                 ))}
               </div>
             ) : (

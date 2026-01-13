@@ -209,6 +209,15 @@ class APIClient {
     return this.get(`/news/${id}`);
   }
 
+  /**
+   * Ottiene le statistiche complete delle visualizzazioni
+   * @async
+   * @returns {Object} Statistiche: totale views, top news, stats per categoria
+   */
+  async getNewsViewsStatistics() {
+    return this.get("/news/stats/views");
+  }
+
   // ===== EVENTI =====
   /**
    * Recupera tutti gli eventi
