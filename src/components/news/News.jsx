@@ -110,7 +110,7 @@ const News = () => {
     <div className="bg-gradient-to-b from-blue-50 to-white min-h-screen py-12 px-4 md:px-8">
       <div className="max-w-6xl mx-auto">
         <div className="mb-12">
-          <h1 className="text-5xl font-bold text-gray-800 mb-4">
+          <h1 className="text-5xl font-bold text-gray-800 mt-8 mb-4">
             📰 Ultime Notizie
           </h1>
           <p className="text-xl text-gray-600">

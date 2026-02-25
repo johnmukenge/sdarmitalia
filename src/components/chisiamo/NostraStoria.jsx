@@ -5,7 +5,7 @@ import FedeFondamentale from "../../data/FedeFondamentale.pdf";
 const NostraStoria = () => {
   return (
     <div className="bg-gray-100 min-h-screen flex flex-col items-center justify-center p-8">
-      <h1 className="text-4xl font-bold text-center mb-8 text-gray-800">
+      <h1 className="text-4xl font-bold text-center mb-8 mt-10 text-gray-800">
         La Nostra Storia
       </h1>
       <div className="flex flex-col md:flex-row items-center md:items-start md:space-x-8">

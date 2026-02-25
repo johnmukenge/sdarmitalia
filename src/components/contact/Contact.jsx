@@ -33,7 +33,7 @@ const Contact = () => {
   };
 
   return (
-    <section className="p-8 bg-gray-100 flex flex-col items-center">
+    <section className="p-8 bg-gray-100 flex mt-10 flex-col items-center">
       <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 p-8 bg-white shadow-lg rounded-lg">
         {/* Colonna del Form */}
         <div>

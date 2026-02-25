@@ -9,9 +9,107 @@ import {
   DollarSign,
   AlertCircle,
   Loader,
+  Image as ImageIcon,
+  X,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import apiClient from "../../services/apiClient";
+
+// Import immagini sede campo
+import salaCultoLocale1 from "../../assets/sede_campo/sala culto locale.jpeg";
+import salaCultoLocale2 from "../../assets/sede_campo/sala culto locale 2.jpeg";
+import salaConferenze1 from "../../assets/sede_campo/sala conferenze.jpeg";
+import salaConferenze2 from "../../assets/sede_campo/sala conferenze 2.jpeg";
+import salaConferenze3 from "../../assets/sede_campo/sala conferenze 3.jpeg";
+import salaConferenze4 from "../../assets/sede_campo/sala conferenze 4.jpeg";
+import salaConferenze5 from "../../assets/sede_campo/sala conferenze 5.jpeg";
+import salaConferenze6 from "../../assets/sede_campo/sala conferenze 6.jpeg";
+import cucina1 from "../../assets/sede_campo/cucina 1.jpeg";
+import cucina2 from "../../assets/sede_campo/cucina 2.jpeg";
+import cucina3 from "../../assets/sede_campo/cucina 3.jpeg";
+import cucina4 from "../../assets/sede_campo/cucina 4.jpeg";
+import cucina5 from "../../assets/sede_campo/cucina 5.jpeg";
+
+// Organizzazione galleria per categorie
+const galleryCategories = [
+  {
+    id: "sala-culto",
+    name: "Sala Culto Locale",
+    description: "Spazio dedicato all'adorazione e alla comunione spirituale",
+    icon: "🙏",
+    images: [
+      { src: salaCultoLocale1, alt: "Sala Culto - Vista principale", caption: "Ambiente accogliente per la preghiera" },
+      { src: salaCultoLocale2, alt: "Sala Culto - Vista laterale", caption: "Disposizione dei posti a sedere" },
+    ],
+  },
+  {
+    id: "sala-conferenze",
+    name: "Sala Conferenze",
+    description: "Area polivalente per eventi, conferenze e attività comunitarie",
+    icon: "📚",
+    images: [
+      { src: salaConferenze1, alt: "Sala Conferenze - Panoramica", caption: "Spazio versatile per eventi" },
+      { src: salaConferenze2, alt: "Sala Conferenze - Setup 1", caption: "Configurazione per conferenze" },
+      { src: salaConferenze3, alt: "Sala Conferenze - Setup 2", caption: "Area presentazioni" },
+      { src: salaConferenze4, alt: "Sala Conferenze - Dettagli", caption: "Attrezzature moderne" },
+      { src: salaConferenze5, alt: "Sala Conferenze - Vista laterale", caption: "Capienza fino a 100 persone" },
+      { src: salaConferenze6, alt: "Sala Conferenze - Allestimento", caption: "Flessibilità degli spazi" },
+    ],
+  },
+  {
+    id: "cucina",
+    name: "Cucina Comunitaria",
+    description: "Cucina attrezzata per preparare pasti e momenti di condivisione",
+    icon: "🍽️",
+    images: [
+      { src: cucina1, alt: "Cucina - Vista generale", caption: "Cucina professionale attrezzata" },
+      { src: cucina2, alt: "Cucina - Area cottura", caption: "Piano cottura e attrezzature" },
+      { src: cucina3, alt: "Cucina - Zona preparazione", caption: "Ampio spazio di lavoro" },
+      { src: cucina4, alt: "Cucina - Elettrodomestici", caption: "Moderne apparecchiature" },
+      { src: cucina5, alt: "Cucina - Dettagli", caption: "Materiali di qualità" },
+    ],
+  },
+  {
+    id: "vista-esterna",
+    name: "Vista Esterna",
+    description: "L'edificio e il contesto paesaggistico circostante",
+    icon: "🏛️",
+    images: [],
+    comingSoon: true,
+  },
+  {
+    id: "sala-pranzo",
+    name: "Sala Pranzo",
+    description: "Spazio conviviale per pasti comunitari e momenti di socialità",
+    icon: "🍴",
+    images: [],
+    comingSoon: true,
+  },
+  {
+    id: "ingresso",
+    name: "Ingresso e Reception",
+    description: "Area di accoglienza e punto informativo",
+    icon: "🚪",
+    images: [],
+    comingSoon: true,
+  },
+  {
+    id: "sala-consiglio",
+    name: "Sala Consiglio",
+    description: "Spazio riservato per riunioni amministrative",
+    icon: "💼",
+    images: [],
+    comingSoon: true,
+  },
+  {
+    id: "bagni",
+    name: "Servizi Igienici",
+    description: "Bagni moderni e accessibili",
+    icon: "🚻",
+    images: [],
+    comingSoon: true,
+  },
+];
 
 const NewCampus = () => {
   const [currentPhaseIndex, setCurrentPhaseIndex] = useState(0);
@@ -19,6 +117,9 @@ const NewCampus = () => {
   const [projectStats, setProjectStats] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState("sala-culto");
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [lightboxImage, setLightboxImage] = useState(null);
 
   // Fetch project phases and statistics
   useEffect(() => {
@@ -105,6 +206,21 @@ const NewCampus = () => {
 
   const currentPhase =
     projectPhases.length > 0 ? projectPhases[currentPhaseIndex] : null;
+
+  // Funzioni per gestire il lightbox
+  const openLightbox = (image) => {
+    setLightboxImage(image);
+    setLightboxOpen(true);
+  };
+
+  const closeLightbox = () => {
+    setLightboxOpen(false);
+    setLightboxImage(null);
+  };
+
+  const selectedCategoryData = galleryCategories.find(
+    (cat) => cat.id === selectedCategory
+  );
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-green-50 pt-24 pb-12">
@@ -310,86 +426,138 @@ const NewCampus = () => {
               </div>
             </section>
 
-            {/* 🎥 Sezione Video e Immagini */}
+            {/* �️ Galleria Fotografica Professionale della Sede */}
             <section className="mb-16">
-              <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-8 md:p-12">
-                  {/* Video */}
-                  <div>
-                    <h3 className="text-2xl font-bold text-gray-800 mb-4">
-                      Tour della Fase {currentPhase?.phaseNumber}
-                    </h3>
-                    <div className="relative w-full aspect-video bg-gray-800 rounded-lg overflow-hidden shadow-lg">
-                      {currentPhase?.mainVideo?.youtubeId ? (
-                        <iframe
-                          className="w-full h-full"
-                          src={`https://www.youtube.com/embed/${currentPhase.mainVideo.youtubeId}`}
-                          title={
-                            currentPhase.mainVideo.title || "Tour della fase"
-                          }
-                          frameBorder="0"
-                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                          allowFullScreen
-                        ></iframe>
-                      ) : (
-                        <div className="w-full h-full flex items-center justify-center text-white">
-                          <p>Video non disponibile per questa fase</p>
-                        </div>
+              <div className="bg-white rounded-2xl shadow-lg overflow-hidden p-8 md:p-12">
+                <div className="text-center mb-12">
+                  <h2 className="text-4xl font-bold text-gray-800 mb-4 flex items-center justify-center gap-3">
+                    <ImageIcon size={36} className="text-blue-600" />
+                    Galleria Fotografica della Sede
+                  </h2>
+                  <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+                    Esplora gli spazi della nostra nuova sede attraverso una galleria fotografica dettagliata. 
+                    Scopri ogni ambiente e visualizza i progressi della costruzione.
+                  </p>
+                </div>
+
+                {/* Filtri Categorie */}
+                <div className="flex flex-wrap justify-center gap-3 mb-12">
+                  {galleryCategories.map((category) => (
+                    <button
+                      key={category.id}
+                      onClick={() => setSelectedCategory(category.id)}
+                      className={`px-6 py-3 rounded-full font-semibold transition-all flex items-center gap-2 ${
+                        selectedCategory === category.id
+                          ? "bg-gradient-to-r from-blue-600 to-green-600 text-white shadow-lg scale-105"
+                          : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                      }`}
+                    >
+                      <span className="text-xl">{category.icon}</span>
+                      <span>{category.name}</span>
+                      {category.comingSoon && (
+                        <span className="text-xs bg-yellow-400 text-gray-800 px-2 py-0.5 rounded-full ml-1">
+                          Prossimamente
+                        </span>
                       )}
-                    </div>
-                    <p className="text-gray-600 mt-4 text-sm">
-                      {currentPhase?.mainVideo?.description ||
-                        "Guarda il video di aggiornamento della fase per vedere i progressi"}
+                    </button>
+                  ))}
+                </div>
+
+                {/* Descrizione Categoria Selezionata */}
+                {selectedCategoryData && (
+                  <div className="bg-gradient-to-r from-blue-50 to-green-50 rounded-xl p-6 mb-8 text-center">
+                    <h3 className="text-2xl font-bold text-gray-800 mb-2 flex items-center justify-center gap-2">
+                      <span className="text-3xl">{selectedCategoryData.icon}</span>
+                      {selectedCategoryData.name}
+                    </h3>
+                    <p className="text-gray-600 text-lg">
+                      {selectedCategoryData.description}
                     </p>
                   </div>
+                )}
 
-                  {/* Immagini Galleria */}
-                  <div>
-                    <h3 className="text-2xl font-bold text-gray-800 mb-4">
-                      Galleria della Fase {currentPhase?.phaseNumber}
-                    </h3>
-                    <div className="grid grid-cols-2 gap-4">
-                      {currentPhase?.gallery?.images &&
-                      currentPhase.gallery.images.length > 0 ? (
-                        currentPhase.gallery.images
-                          .slice(0, 4)
-                          .map((img, idx) => (
-                            <div
-                              key={idx}
-                              className="aspect-square overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-shadow cursor-pointer"
-                            >
-                              <img
-                                src={img.url}
-                                alt={img.title}
-                                className="w-full h-full object-cover hover:scale-110 transition-transform duration-300"
-                                onError={(e) => {
-                                  e.target.src =
-                                    "https://via.placeholder.com/300?text=Immagine";
-                                }}
-                              />
-                            </div>
-                          ))
-                      ) : (
-                        <>
-                          {[1, 2, 3, 4].map((item) => (
-                            <div
-                              key={item}
-                              className="aspect-square bg-gradient-to-br from-blue-400 to-green-400 rounded-lg flex items-center justify-center text-white font-bold text-lg shadow-lg hover:shadow-xl transition-shadow cursor-pointer"
-                            >
-                              <span>Immagine {item}</span>
-                            </div>
-                          ))}
-                        </>
-                      )}
+                {/* Griglia Immagini */}
+                {selectedCategoryData && !selectedCategoryData.comingSoon ? (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {selectedCategoryData.images.map((image, idx) => (
+                      <div
+                        key={idx}
+                        className="group relative aspect-[4/3] overflow-hidden rounded-xl shadow-md hover:shadow-2xl transition-all duration-300 cursor-pointer"
+                        onClick={() => openLightbox(image)}
+                      >
+                        <img
+                          src={image.src}
+                          alt={image.alt}
+                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                          <div className="p-4 text-white w-full">
+                            <p className="font-semibold text-lg mb-1">
+                              {image.caption}
+                            </p>
+                            <p className="text-sm text-gray-200">
+                              Clicca per ingrandire
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="text-center py-16 bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl">
+                    <div className="text-6xl mb-4">📸</div>
+                    <h4 className="text-2xl font-bold text-gray-700 mb-2">
+                      Foto in Arrivo
+                    </h4>
+                    <p className="text-gray-600 max-w-md mx-auto">
+                      Le immagini di questa sezione saranno disponibili a breve. 
+                      Stiamo documentando ogni fase della costruzione!
+                    </p>
+                  </div>
+                )}
+
+                {/* Statistiche Galleria */}
+                {selectedCategoryData && !selectedCategoryData.comingSoon && (
+                  <div className="mt-8 pt-8 border-t border-gray-200">
+                    <div className="text-center text-sm text-gray-600">
+                      <strong>{selectedCategoryData.images.length}</strong> {selectedCategoryData.images.length === 1 ? 'foto disponibile' : 'foto disponibili'} in questa categoria
                     </div>
-                    <p className="text-gray-600 mt-4 text-sm">
-                      Scorri la galleria per vedere gli ultimi aggiornamenti
-                      della fase.
+                  </div>
+                )}
+              </div>
+            </section>
+
+            {/* Lightbox per visualizzazione immagini a schermo intero */}
+            {lightboxOpen && lightboxImage && (
+              <div
+                className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center p-4 animate-fadeIn"
+                onClick={closeLightbox}
+              >
+                <button
+                  onClick={closeLightbox}
+                  className="absolute top-4 right-4 text-white hover:text-gray-300 transition-colors z-10"
+                  aria-label="Chiudi"
+                >
+                  <X size={40} />
+                </button>
+                <div className="max-w-7xl max-h-full w-full h-full flex flex-col items-center justify-center">
+                  <img
+                    src={lightboxImage.src}
+                    alt={lightboxImage.alt}
+                    className="max-w-full max-h-[85vh] object-contain rounded-lg shadow-2xl"
+                    onClick={(e) => e.stopPropagation()}
+                  />
+                  <div className="mt-6 text-center text-white max-w-2xl">
+                    <p className="text-2xl font-bold mb-2">
+                      {lightboxImage.caption}
+                    </p>
+                    <p className="text-gray-300">
+                      {lightboxImage.alt}
                     </p>
                   </div>
                 </div>
               </div>
-            </section>
+            )}
 
             {/* 📋 Sezione Dettagli Progetto */}
             <section className="mb-16">

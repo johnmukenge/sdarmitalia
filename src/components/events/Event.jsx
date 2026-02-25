@@ -70,7 +70,7 @@ const Event = () => {
       {/* Header */}
       <section className="bg-gradient-to-r text-black py-12 px-4">
         <div className="container mx-auto text-center">
-          <h1 className="text-4xl md:text-4xl font-bold mb-4">
+          <h1 className="text-4xl md:text-4xl mt-8 font-bold mb-4">
             Notizie & Eventi
           </h1>
           <p className="text-xl md:text-2xl text-black">

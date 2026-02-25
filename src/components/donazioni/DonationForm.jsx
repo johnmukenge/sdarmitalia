@@ -2,9 +2,7 @@ import { useState } from "react";
 import {
   useStripe,
   useElements,
-  CardNumberElement,
-  CardExpiryElement,
-  CardCvcElement,
+  PaymentElement,
 } from "@stripe/react-stripe-js";
 import { Loader, AlertCircle } from "lucide-react";
 import { API_ENDPOINTS } from "../../config/apiConfig";
@@ -22,6 +20,7 @@ const DonationForm = ({ amount, onSuccess, onCancel }) => {
     categoria: "generale",
     ricevuta: false,
   });
+  const [clientSecret, setClientSecret] = useState(null);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -42,77 +41,60 @@ const DonationForm = ({ amount, onSuccess, onCancel }) => {
 
     setIsProcessing(true);
 
-    try {
-      // Crea il payment intent sul backend
-      const response = await fetch(API_ENDPOINTS.DONATIONS_CREATE_INTENT, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          importo: amount, // Mantieni in euro, il backend converte in centesimi
-          email: formData.email.toLowerCase(),
-          nome: formData.name.trim(),
-          anonimo: formData.anonimo || false,
-          categoria: formData.categoria || "generale",
-          ricevuta: formData.ricevuta || false,
-        }),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(
-          errorData.message || "Errore nella creazione del pagamento"
-        );
-      }
-
-      const data = await response.json();
-      const { clientSecret, paymentIntentId, beneficiary } = data;
-
+    try {//Se non abbiamo ancora il clientSecret, crealo
       if (!clientSecret) {
-        throw new Error("Errore nella creazione del pagamento");
-      }
-
-      // Mostra info beneficiario (maskerato)
-      console.log(`Donazione a: ${beneficiary.name} - ${beneficiary.iban}`);
-
-      // Conferma il pagamento con Stripe
-      const { error: stripeError, paymentIntent } =
-        await stripe.confirmCardPayment(clientSecret, {
-          payment_method: {
-            card: elements.getElement(CardNumberElement),
-            billing_details: {
-              name: formData.name,
-              email: formData.email,
-            },
-          },
-        });
-
-      if (stripeError) {
-        // Payment failed - backend webhook will mark as failed
-        setError(stripeError.message);
-      } else if (paymentIntent.status === "succeeded") {
-        // Confirm with backend
-        const confirmResponse = await fetch(API_ENDPOINTS.DONATIONS_CONFIRM, {
+        const response = await fetch(API_ENDPOINTS.DONATIONS_CREATE_INTENT, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            paymentIntentId: paymentIntent.id,
+            importo: amount,
+            email: formData.email.toLowerCase(),
+            nome: formData.name.trim(),
+            anonimo: formData.anonimo || false,
+            categoria: formData.categoria || "generale",
+            ricevuta: formData.ricevuta || false,
           }),
         });
 
-        if (confirmResponse.ok) {
-          onSuccess();
-        } else {
-          throw new Error("Errore nella conferma del pagamento");
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(
+            errorData.message || "Errore nella creazione del pagamento"
+          );
         }
+
+        const data = await response.json();
+        setClientSecret(data.clientSecret);
+        setIsProcessing(false);
+        return;
+      }
+
+      // Conferma il pagamento con il metodo scelto
+      const { error: stripeError } = await stripe.confirmPayment({
+        elements,
+        confirmParams: {
+          return_url: `${window.location.origin}/donazioni/success`,
+          payment_method_data: {
+            billing_details: {
+              name: formData.name,
+              email: formData.email,
+            },
+          },
+        },
+        redirect: "if_required",
+      });
+
+      if (stripeError) {
+        setError(stripeError.message);
+        setIsProcessing(false);
       } else {
-        setError("Pagamento non completato. Riprova.");
+        onSuccess();
       }
     } catch (err) {
       setError(err.message || "Si è verificato un errore. Riprova.");
+      console.error(err.message || "Si è verificato un errore. Riprova.");
     } finally {
       setIsProcessing(false);
     }
@@ -179,92 +161,32 @@ const DonationForm = ({ amount, onSuccess, onCancel }) => {
           />
         </div>
 
-        {/* Card Fields */}
-        <div className="space-y-4">
-          {/* Card Number */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Numero Carta *
-            </label>
-            <div className="bg-white border-2 border-gray-300 rounded-lg p-4 focus-within:border-blue-600 focus-within:ring-2 focus-within:ring-blue-200 transition-all">
-              <CardNumberElement
+        {/* Payment Methods */}
+        {clientSecret && (
+          <div className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-3">
+                Metodo di Pagamento *
+              </label>
+              <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 mb-3">
+                <p className="text-xs text-blue-800">
+                  💡 <strong>Risparmia sulle commissioni:</strong> SEPA Direct Debit costa solo €0,35 fisso (vs carte 1,5% + €0,25). Ideale per donazioni da €100+!
+                </p>
+              </div>
+              <PaymentElement
                 options={{
-                  style: {
-                    base: {
-                      fontSize: "16px",
-                      color: "#1f2937",
-                      fontFamily: '"Segoe UI", Roboto, sans-serif',
-                      "::placeholder": {
-                        color: "#9ca3af",
-                      },
-                      lineHeight: "40px",
-                    },
-                    invalid: {
-                      color: "#ef4444",
+                  layout: "tabs",
+                  defaultValues: {
+                    billingDetails: {
+                      name: formData.name,
+                      email: formData.email,
                     },
                   },
                 }}
               />
             </div>
           </div>
-
-          {/* Expiry and CVC */}
-          <div className="grid grid-cols-2 gap-4">
-            {/* Expiry Date */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Scadenza (MM/YY) *
-              </label>
-              <div className="bg-white border-2 border-gray-300 rounded-lg p-4 focus-within:border-blue-600 focus-within:ring-2 focus-within:ring-blue-200 transition-all">
-                <CardExpiryElement
-                  options={{
-                    style: {
-                      base: {
-                        fontSize: "16px",
-                        color: "#1f2937",
-                        fontFamily: '"Segoe UI", Roboto, sans-serif',
-                        "::placeholder": {
-                          color: "#9ca3af",
-                        },
-                        lineHeight: "40px",
-                      },
-                      invalid: {
-                        color: "#ef4444",
-                      },
-                    },
-                  }}
-                />
-              </div>
-            </div>
-
-            {/* CVC */}
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                CVC *
-              </label>
-              <div className="bg-white border-2 border-gray-300 rounded-lg p-4 focus-within:border-blue-600 focus-within:ring-2 focus-within:ring-blue-200 transition-all">
-                <CardCvcElement
-                  options={{
-                    style: {
-                      base: {
-                        fontSize: "16px",
-                        color: "#1f2937",
-                        fontFamily: '"Segoe UI", Roboto, sans-serif',
-                        "::placeholder": {
-                          color: "#9ca3af",
-                        },
-                        lineHeight: "40px",
-                      },
-                      invalid: {
-                        color: "#ef4444",
-                      },
-                    },
-                  }}
-                />
-              </div>
-            </div>
-          </div>
-        </div>
+        )}
 
         {/* Buttons */}
         <div className="flex gap-4 pt-4">
@@ -278,16 +200,18 @@ const DonationForm = ({ amount, onSuccess, onCancel }) => {
           </button>
           <button
             type="submit"
-            disabled={isProcessing || !stripe}
+            disabled={isProcessing || !stripe || (!clientSecret && (!formData.email || !formData.name))}
             className="flex-1 px-6 py-3 bg-blue-950 text-white font-semibold rounded-lg hover:bg-blue-900 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors duration-200 flex items-center justify-center gap-2"
           >
             {isProcessing ? (
               <>
                 <Loader className="w-5 h-5 animate-spin" />
-                Elaborazione...
+                {clientSecret ? "Elaborazione..." : "Caricamento..."}
               </>
-            ) : (
+            ) : clientSecret ? (
               `Dona €${amount.toFixed(2)}`
+            ) : (
+              "Continua"
             )}
           </button>
         </div>

@@ -6,10 +6,15 @@ import bibleStudyImg from "../../assets/bible-study.jpg";
 import articoli from "../../data/articoli";
 import Lezionario from "../../documents/Lezionario-1-2026.pdf";
 import NewsSlider from "../news/NewsSlider";
+import Header from "../header/Header";
 
 const Body = () => {
   return (
-    <div className="container mx-auto p-8 space-y-16">
+    <>
+      {/* Video di sfondo - Solo nella Home Page */}
+      <Header />
+      
+      <div className="container mx-auto p-8 space-y-16">
       {/* 📰 Sezione Ultime Notizie - NEWS SLIDER DA API */}
       <section className="py-16 px-4 bg-white">
         <div className="max-w-6xl mx-auto">
@@ -172,6 +177,7 @@ const Body = () => {
         </div>
       </section>
     </div>
+    </>
   );
 };
 
