@@ -157,6 +157,17 @@ const Biblioteca = () => {
     }
   };
 
+  // Gestione download - aggiorna stato locale dopo download riuscito
+  const handleDownloadSuccess = (libroId, newDownloadCount) => {
+    setLibri(prevLibri =>
+      prevLibri.map(libro =>
+        libro._id === libroId
+          ? { ...libro, downloads: newDownloadCount }
+          : libro
+      )
+    );
+  };
+
   // Reset filtri
   const resetFilters = () => {
     setSearchTerm("");
@@ -427,6 +438,7 @@ const Biblioteca = () => {
                     libro={libro}
                     onTtsClick={handleTtsClick}
                     isSpeaking={isSpeaking && currentTts?._id === libro._id}
+                    onDownloadSuccess={(newCount) => handleDownloadSuccess(libro._id, newCount)}
                   />
                 ))}
               </div>

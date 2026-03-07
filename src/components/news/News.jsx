@@ -114,7 +114,7 @@ const News = () => {
             📰 Ultime Notizie
           </h1>
           <p className="text-xl text-gray-600">
-            Rimani aggiornato sulle novità della comunità SDA Italia
+            Rimani aggiornato sulle novità della comunità Avventisti Del Settimo Giorno Movimento Di Riforma Italia
           </p>
         </div>
 

@@ -81,7 +81,7 @@ const Contact = () => {
           <div>
             <h3 className="text-lg font-semibold">Sede Italia</h3>
             <p>Largo Nicolini 2/a - 34129, Trieste</p>
-            <p>Tel: +39 XXX XXX XXXX</p>
+            <p>Tel: +39 39 175 233 75</p>
             <p>Poste: 2339, 34144 Trieste</p>
             <p>Email: italy@sdarm.org</p>
             <iframe

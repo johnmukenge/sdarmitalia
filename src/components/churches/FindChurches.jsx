@@ -2,15 +2,11 @@ import { useState, useEffect } from "react";
 import articleImg1 from "../../assets/sdarm-beliefs-baptism.jpg";
 import articleImg2 from "../../assets/sdarm-beliefs-bible.jpg";
 import articleImg3 from "../../assets/sdarm-beliefs-carpenter.jpg";
-import Milano from "../../assets/milano.jpg";
-import Poppi from "../../assets/Poppi.jpg";
-import Roma from "../../assets/Roma.jpg";
-import Torino from "../../assets/Torino.jpg";
 import Trieste from "../../assets/Trieste.jpg";
 
 const FindChurches = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const images = [Milano, Poppi, Roma, Torino, Trieste];
+  const images = [Trieste, articleImg1, articleImg2, articleImg3];
 
   const nextSlide = () => {
     setCurrentSlide((prev) => (prev + 1) % images.length);
@@ -60,7 +56,7 @@ const FindChurches = () => {
         <div>
             <h3 className="text-lg font-semibold">Chiesa di Trieste</h3>
             <p>Largo Nicolini 2/a - 34129, Trieste</p>
-            <p>Tel: +39 XXX XXX XXXX</p>
+            <p>Tel: +39 39 175 233 75</p>
             <p>Poste: 2339, 34144 Trieste</p>
             <p>Email: italy@sdarm.org</p>
             <iframe
@@ -75,7 +71,7 @@ const FindChurches = () => {
         <div>
             <h3 className="text-lg font-semibold">Chiesa di Torino</h3>
             <p>Largo Nicolini 2/a - 34129, Trieste</p>
-            <p>Tel: +39 XXX XXX XXXX</p>
+            <p>Tel: +39 175 233 75</p>
             <p>Poste: 2339, 34144 Trieste</p>
             <p>Email: italy@sdarm.org</p>
             <iframe
@@ -90,7 +86,7 @@ const FindChurches = () => {
         <div>
             <h3 className="text-lg font-semibold">Chiesa di Milano</h3>
             <p>Largo Nicolini 2/a - 34129, Trieste</p>
-            <p>Tel: +39 XXX XXX XXXX</p>
+            <p>Tel: +39 39 175 233 75</p>
             <p>Poste: 2339, 34144 Trieste</p>
             <p>Email: italy@sdarm.org</p>
             <iframe
@@ -104,7 +100,7 @@ const FindChurches = () => {
         <div>
             <h3 className="text-lg font-semibold">Chiesa di Poppi</h3>
             <p>Largo Nicolini 2/a - 34129, Trieste</p>
-            <p>Tel: +39 XXX XXX XXXX</p>
+            <p>Tel: +39 39 175 233 75</p>
             <p>Poste: 2339, 34144 Trieste</p>
             <p>Email: italy@sdarm.org</p>
             <iframe
@@ -118,7 +114,7 @@ const FindChurches = () => {
           <div>
             <h3 className="text-lg font-semibold">Chiesa di Capolona</h3>
             <p>Largo Nicolini 2/a - 34129, Trieste</p>
-            <p>Tel: +39 XXX XXX XXXX</p>
+            <p>Tel: +39 175 233 75</p>
             <p>Poste: 2339, 34144 Trieste</p>
             <p>Email: italy@sdarm.org</p>
             <iframe
@@ -132,7 +128,7 @@ const FindChurches = () => {
           <div>
             <h3 className="text-lg font-semibold">Chiesa di Roma</h3>
             <p>Largo Nicolini 2/a - 34129, Trieste</p>
-            <p>Tel: +39 XXX XXX XXXX</p>
+            <p>Tel: +39 39 175 233 75</p>
             <p>Poste: 2339, 34144 Trieste</p>
             <p>Email: italy@sdarm.org</p>
             <iframe

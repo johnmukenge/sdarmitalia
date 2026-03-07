@@ -1,4 +1,5 @@
 const capella = new URL("../../assets/capella.jpg", import.meta.url).href;
+const videoSalaCulto = new URL("../../assets/sede_campo/video-sala-culto-casentino.mp4", import.meta.url).href;
 
 const Header = () => {
   return (
@@ -8,10 +9,13 @@ const Header = () => {
         autoPlay
         muted
         loop
+        playsInline
+        preload="auto"
         className="absolute inset-0 w-full h-full object-cover"
+        style={{ objectFit: 'cover' }}
       >
         <source
-          src="https://www.w3schools.com/html/mov_bbb.mp4"
+          src={videoSalaCulto}
           type="video/mp4"
         />
         <img

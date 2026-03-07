@@ -2,7 +2,7 @@
  * @file apiClient.js
  * @description Client centralizzato per tutte le API calls
  * @version 1.0
- * @author SDA Italia Dev Team
+ * @author Avventisti Del Settimo Giorno Movimento Di Riforma Italia Dev Team
  *
  * Gestisce tutte le comunicazioni con il backend
  * Include error handling, retry logic, e timeout
