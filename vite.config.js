@@ -9,4 +9,14 @@ export default defineConfig({
       "/api": "http://localhost:5000",
     },
   },
+  build: {
+    rollupOptions: {
+      output: {
+        // Usa timestamp per forzare nuovo hash ad ogni build
+        entryFileNames: `assets/[name]-[hash]-${Date.now()}.js`,
+        chunkFileNames: `assets/[name]-[hash]-${Date.now()}.js`,
+        assetFileNames: `assets/[name]-[hash].[ext]`
+      }
+    }
+  }
 });
