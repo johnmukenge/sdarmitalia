@@ -39,7 +39,7 @@ src/
 
 ```env
 # API Configuration
-VITE_API_URL=http://localhost:5000/api/v1
+VITE_API_URL=http://localhost:3000/api/v1
 
 # Feature Flags
 VITE_ENABLE_TTS=true
@@ -285,7 +285,7 @@ cd sdarmitalia
 npm install
 
 # Configura variabili di ambiente (.env)
-VITE_API_URL=http://localhost:5000/api/v1
+VITE_API_URL=http://localhost:3000/api/v1
 
 # Avvia dev server
 npm run dev

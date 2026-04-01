@@ -73,7 +73,7 @@
 #### File: `.env`
 
 ```env
-VITE_API_URL=http://localhost:5000/api/v1
+VITE_API_URL=http://localhost:3000/api/v1
 VITE_ENABLE_TTS=true
 VITE_ENABLE_DONATIONS=true
 VITE_ENABLE_ANALYTICS=false

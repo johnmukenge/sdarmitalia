@@ -17,7 +17,7 @@ Crea o modifica `.env.local`:
 
 ```env
 VITE_STRIPE_PUBLIC_KEY=pk_test_YOUR_KEY_HERE
-VITE_API_URL=http://localhost:5000
+VITE_API_URL=http://localhost:3000
 ```
 
 **Backend (sdarmitalia-server)**

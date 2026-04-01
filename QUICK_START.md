@@ -175,7 +175,7 @@ const { items, page, totalPages, nextPage, prevPage } = usePaginatedFetch(
 
 - [ ] Backend `.env` configurato con MongoDB Atlas connection
 - [ ] Backend running: `npm start`
-- [ ] Frontend `.env` ha `VITE_API_URL=http://localhost:5000/api/v1`
+- [ ] Frontend `.env` ha `VITE_API_URL=http://localhost:3000/api/v1`
 - [ ] Frontend running: `npm run dev`
 - [ ] Browser console open (F12) per errori
 - [ ] Database seeded: `node seed.js`
